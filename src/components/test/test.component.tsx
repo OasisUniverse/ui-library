@@ -1,9 +1,7 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
-const Test:FC = () => {
-    return(
-        <div>hello</div>
-    )
-}
+const Test: FC = () => {
+    return <div>hello</div>;
+};
 
-export default Test
+export default Test;
