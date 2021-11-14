@@ -1,0 +1,21 @@
+.boundingWrapper {
+    position: relative;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #2d2d2d;
+
+    &.isDragOver {
+        border: 2px dashed #ffde00;
+    }
+
+    .dropMessage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #464540;
+        z-index: 10000;
+    }
+}
