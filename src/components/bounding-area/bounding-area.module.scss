@@ -1,6 +1,5 @@
 .boundingWrapper {
     position: relative;
-    width: 700px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,5 +16,11 @@
         transform: translate(-50%, -50%);
         color: #464540;
         z-index: 10000;
+        text-align: center;
+    }
+
+    canvas {
+        /* to see where the canvas is */
+        border: 1px solid red;
     }
 }

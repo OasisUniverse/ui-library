@@ -11,7 +11,6 @@ export interface BoundingAreaProps {
     uploadPhraseText?: string;
     maxFileSize?: number;
     debugFileData?: boolean;
-    isShowErrorLabel?: boolean;
     acceptReg: string;
     isStopSizeAndAcceptValidation?: boolean;
     uploadFileCallBack: (file?: File, error?: UploadFileErrors) => void;
@@ -29,15 +28,47 @@ const BoundingArea: FC<BoundingAreaProps> = ({
     canvasSize = 700,
 }) => {
     const uploadArea = useRef<HTMLDivElement>(null);
-    const fileInput = useRef<HTMLInputElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const [isDrag, setIsDrag] = useState<boolean>(false);
     const [, setFileData] = useState<File[]>([]);
     const [isError, setIsError] = useState<boolean>(false);
 
+    const stopDefaultLogic = (e: React.DragEvent | React.DragEvent<HTMLDivElement> | ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
     const onDragLeave = (): void => {
         isDrag && setIsDrag(false);
+    };
+
+    const returnFileFrom = (
+        e:
+            | (React.DragEvent<HTMLDivElement> & { dataTransfer?: DataTransfer })
+            | (ChangeEvent<HTMLInputElement> & { dataTransfer?: DataTransfer }),
+    ) =>
+        (e.target as HTMLInputElement).files
+            ? ((e?.target as HTMLInputElement)?.files as FileList)[0]
+            : (e?.dataTransfer?.files[0] as File);
+
+    const returnErrorWithStatus = (type: UploadFileErrors) => {
+        setIsError(true);
+        uploadFileCallBack(undefined, type);
+        return;
+    };
+
+    const isValid = (string: string, file: File) => string.split(',').some((reg) => file.type.trim() === reg.trim());
+
+    const getCvsContext = () => {
+        const canvas = canvasRef.current;
+        return canvas?.getContext('2d');
+    };
+
+    const settingImageWithLogic = (img: HTMLImageElement, ctx: CanvasRenderingContext2D) => {
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0, canvasSize, canvasSize);
+        };
     };
 
     const uploadFile = useCallback(
@@ -46,102 +77,33 @@ const BoundingArea: FC<BoundingAreaProps> = ({
                 | (React.DragEvent<HTMLDivElement> & { dataTransfer?: DataTransfer })
                 | (ChangeEvent<HTMLInputElement> & { dataTransfer?: DataTransfer }),
         ): void => {
-            e.preventDefault();
-            e.stopPropagation();
+            stopDefaultLogic(e);
             setIsDrag(false);
-
-            const file = (e.target as HTMLInputElement).files
-                ? ((e?.target as HTMLInputElement)?.files as FileList)[0]
-                : (e?.dataTransfer?.files[0] as File);
-
-            if (file) {
-                debugFileData && console.log(file);
-
-                if (!isStopSizeAndAcceptValidation) {
-                    if (!acceptReg.split(',').some((reg) => file.type.trim() === reg.trim())) {
-                        setIsError(true);
-                        uploadFileCallBack(undefined, UploadFileErrors.AcceptReg);
-                        return;
-                    }
-
-                    if (file?.size > maxFileSize) {
-                        setIsError(true);
-                        uploadFileCallBack(undefined, UploadFileErrors.Size);
-                        return;
-                    }
-                    if (fileInput.current) {
-                        (fileInput.current as HTMLInputElement).value = '';
-                    }
-
-                    setFileData((prevState) => {
-                        if (!prevState) {
-                            return [file];
-                        } else {
-                            return [...prevState, file];
-                        }
-                    });
-                    setIsError(false);
-                }
-
-                // checking canvas ref is exists
-                if (canvasRef.current) {
-                    // getting canvas
-                    const canvas = canvasRef.current;
-                    // getting context
-                    const ctx = canvas.getContext('2d');
-                    // checking file type
-                    if (file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === 'image/png') {
-                        // creating file reader
-                        const reader = new FileReader();
-                        // uploading images when reader loaded
-                        reader.onload = ({ target }) => {
-                            // checking event.target and context exists
-                            if (target && ctx) {
-                                // creating special image for canvas
-                                const img = new Image();
-                                // drawing image when it's loaded
-                                const cvsCenter = canvasSize / 2;
-                                img.onload = function () {
-                                    if (img.height > canvasSize && img.width > canvasSize) {
-                                        ctx.drawImage(img, 0, 0, canvasSize, img.height);
-                                    } else if (img.height > canvasSize) {
-                                        ctx.drawImage(img, cvsCenter - img.width / 2, 0, img.width, canvasSize);
-                                    } else if (img.width > canvasSize) {
-                                        ctx.drawImage(img, 0, cvsCenter - img.height / 2, canvasSize, canvasSize);
-                                    } else {
-                                        ctx.drawImage(
-                                            img,
-                                            cvsCenter - img.width / 2,
-                                            cvsCenter - img.height / 2,
-                                            img.width,
-                                            img.height,
-                                        );
-                                    }
-                                };
-                                // setting image source if result exists
-                                if (target.result) img.src = target.result as string;
-                            }
-                        };
-                        // reading file as data url
-                        reader.readAsDataURL(file);
-                    }
-                }
-
-                uploadFileCallBack(file);
+            const file = returnFileFrom(e);
+            if (!isStopSizeAndAcceptValidation && file) {
+                !isValid(acceptReg, file) && returnErrorWithStatus(UploadFileErrors.AcceptReg);
+                file?.size > maxFileSize && returnErrorWithStatus(UploadFileErrors.Size);
+                setFileData((prevState) => (!prevState ? [file] : [...prevState, file]));
+                setIsError(false);
             }
+            if (canvasRef.current && file) {
+                const ctx = getCvsContext();
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target && ctx) {
+                        const img = new Image();
+                        settingImageWithLogic(img, ctx);
+                        if (e.target.result) img.src = e.target.result as string;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+            file && uploadFileCallBack(file);
         },
         [debugFileData, acceptReg, isStopSizeAndAcceptValidation, maxFileSize, uploadFileCallBack],
     );
-
-    const onDragOver = (event: React.DragEvent<HTMLDivElement>): void => {
-        event.preventDefault();
-        event.stopPropagation();
-    };
-
-    const onDragEnter = (e: React.DragEvent): void => {
-        e.preventDefault();
-        e.stopPropagation();
-
+    const onDragOverAndEnterLogic = (e: React.DragEvent): void => {
+        stopDefaultLogic(e);
         !isDrag && setIsDrag(true);
         isError && setIsError(false);
     };
@@ -149,9 +111,9 @@ const BoundingArea: FC<BoundingAreaProps> = ({
         <div
             ref={uploadArea}
             className={`${styles.boundingWrapper} ${isDrag && styles.isDragOver}`}
-            onDragEnter={onDragEnter}
+            onDragEnter={onDragOverAndEnterLogic}
             onDragLeave={onDragLeave}
-            onDragOver={onDragOver}
+            onDragOver={onDragOverAndEnterLogic}
             onDrop={uploadFile}
         >
             {text && <span className={`${styles.text}`}>{text}</span>}
