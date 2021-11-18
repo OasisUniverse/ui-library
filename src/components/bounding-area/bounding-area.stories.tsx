@@ -10,8 +10,4 @@ export default {
 const Template: Story<BoundingAreaProps> = (args) => <BoundingArea {...args} />;
 
 export const Initial = Template.bind({});
-Initial.args = {
-    acceptReg: 'image/png, image/jpeg',
-    uploadFileCallBack: () => undefined,
-    canvasSize: 300,
-};
+Initial.args = {};

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useCallback, useRef, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './bounding-area.module.scss';
 
 export enum UploadFileErrors {
@@ -6,42 +6,53 @@ export enum UploadFileErrors {
     AcceptReg,
 }
 
+export enum Sizes {
+    Small = 'Small',
+    Normal = 'Normal',
+    Large = 'Large',
+}
+
+// todo в пропсе config отслеживается состояние картинок и изменяется по слоям как находятся объекты в массиве
+// Не до конца понял на счёт конфигурации.
+// todo при получении картинки вызывать callback объектом этой картинки.
+// getFileCallback является тем самым callback, что указан выше.
+
 export interface BoundingAreaProps {
-    text?: string;
+    className?: string;
+    size: Sizes;
     uploadPhraseText?: string;
     maxFileSize?: number;
     debugFileData?: boolean;
     acceptReg: string;
     isStopSizeAndAcceptValidation?: boolean;
     uploadFileCallBack: (file?: File, error?: UploadFileErrors) => void;
-    canvasSize?: number;
+    getFileCallBack: (data: File) => void;
+    data: string[];
+    sendDataToServer: (data: File[]) => void;
 }
 
 const BoundingArea: FC<BoundingAreaProps> = ({
-    text = '',
+    className,
+    size,
     uploadPhraseText,
     maxFileSize = 2097152, //2МБ in bytes
     debugFileData = false,
     isStopSizeAndAcceptValidation = false,
     acceptReg,
     uploadFileCallBack,
-    canvasSize = 700,
+    getFileCallBack,
+    sendDataToServer,
+    data,
 }) => {
     const uploadArea = useRef<HTMLDivElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
     const [isDrag, setIsDrag] = useState<boolean>(false);
-    const [, setFileData] = useState<File[]>([]);
+    const [filesData, setFilesData] = useState<File[]>([]);
     const [isError, setIsError] = useState<boolean>(false);
 
-    const stopDefaultLogic = (e: React.DragEvent | React.DragEvent<HTMLDivElement> | ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-    };
-
-    const onDragLeave = (): void => {
-        isDrag && setIsDrag(false);
-    };
+    useEffect(() => {
+        // fix after setting mocks
+        setFilesData([]);
+    }, [data]);
 
     const returnFileFrom = (
         e:
@@ -60,69 +71,70 @@ const BoundingArea: FC<BoundingAreaProps> = ({
 
     const isValid = (string: string, file: File) => string.split(',').some((reg) => file.type.trim() === reg.trim());
 
-    const getCvsContext = () => {
-        const canvas = canvasRef.current;
-        return canvas?.getContext('2d');
-    };
-
-    const settingImageWithLogic = (img: HTMLImageElement, ctx: CanvasRenderingContext2D) => {
-        img.onload = () => {
-            ctx.drawImage(img, 0, 0, canvasSize, canvasSize);
-        };
-    };
-
     const uploadFile = useCallback(
         (
             e:
                 | (React.DragEvent<HTMLDivElement> & { dataTransfer?: DataTransfer })
                 | (ChangeEvent<HTMLInputElement> & { dataTransfer?: DataTransfer }),
         ): void => {
-            stopDefaultLogic(e);
+            e.preventDefault();
+            e.stopPropagation();
             setIsDrag(false);
             const file = returnFileFrom(e);
+            debugFileData && console.log(file);
             if (!isStopSizeAndAcceptValidation && file) {
                 !isValid(acceptReg, file) && returnErrorWithStatus(UploadFileErrors.AcceptReg);
                 file?.size > maxFileSize && returnErrorWithStatus(UploadFileErrors.Size);
-                setFileData((prevState) => (!prevState ? [file] : [...prevState, file]));
+                setFilesData((prevState) => (!prevState ? [file] : [...prevState, file]));
                 setIsError(false);
             }
-            if (canvasRef.current && file) {
-                const ctx = getCvsContext();
+            if (file) {
                 const reader = new FileReader();
+                const img = new Image();
                 reader.onload = (e) => {
-                    if (e.target && ctx) {
-                        const img = new Image();
-                        settingImageWithLogic(img, ctx);
-                        if (e.target.result) img.src = e.target.result as string;
-                    }
+                    if (e?.target?.result) img.src = e.target.result as string;
+                    console.log(e?.target?.result);
+                    reader.readAsDataURL(file);
                 };
-                reader.readAsDataURL(file);
             }
             file && uploadFileCallBack(file);
+            file && getFileCallBack(file);
+            file && sendDataToServer(filesData);
         },
         [debugFileData, acceptReg, isStopSizeAndAcceptValidation, maxFileSize, uploadFileCallBack],
     );
+
+    const onDragLeave = (): void => {
+        isDrag && setIsDrag(false);
+    };
+
     const onDragOverAndEnterLogic = (e: React.DragEvent): void => {
-        stopDefaultLogic(e);
+        e.preventDefault();
+        e.stopPropagation();
         !isDrag && setIsDrag(true);
         isError && setIsError(false);
     };
+
     return (
         <div
             ref={uploadArea}
-            className={`${styles.boundingWrapper} ${isDrag && styles.isDragOver}`}
+            className={`${styles.boundingWrapper} ${className} ${isDrag && styles.isDragOver} ${
+                size && `styles.${size}`
+            }`}
             onDragEnter={onDragOverAndEnterLogic}
             onDragLeave={onDragLeave}
             onDragOver={onDragOverAndEnterLogic}
             onDrop={uploadFile}
         >
-            {text && <span className={`${styles.text}`}>{text}</span>}
             {isDrag && (
-                <span className={styles.dropMessage}>
+                <span onDragOver={onDragOverAndEnterLogic} className={styles.dropMessage}>
                     {uploadPhraseText ?? 'Отпустите, чтобы загрузить изображение'}
                 </span>
             )}
-            <canvas ref={canvasRef} height={canvasSize} width={canvasSize} />
+            {
+                // Нужно обдумать структуру вывода изображений внутри компонента
+                // filesData.map((el) => <img src={el.} alt={el.name}/>)
+            }
         </div>
     );
 };
