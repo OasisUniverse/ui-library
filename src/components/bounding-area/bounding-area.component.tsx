@@ -1,58 +1,35 @@
-import React, { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useRef, useState } from 'react';
 import styles from './bounding-area.module.scss';
+import { Config } from '../../interfaces';
 
 export enum UploadFileErrors {
     Size,
     AcceptReg,
 }
 
-export enum Sizes {
-    Small = 'Small',
-    Normal = 'Normal',
-    Large = 'Large',
-}
-
-// todo в пропсе config отслеживается состояние картинок и изменяется по слоям как находятся объекты в массиве
-// Не до конца понял на счёт конфигурации.
-// todo при получении картинки вызывать callback объектом этой картинки.
-// getFileCallback является тем самым callback, что указан выше.
-
 export interface BoundingAreaProps {
     className?: string;
-    size: Sizes;
+    boundingAreaSize?: 'small' | 'normal' | 'large';
     uploadPhraseText?: string;
     maxFileSize?: number;
     debugFileData?: boolean;
     acceptReg: string;
-    isStopSizeAndAcceptValidation?: boolean;
-    uploadFileCallBack: (file?: File, error?: UploadFileErrors) => void;
-    getFileCallBack: (data: File) => void;
-    data: string[];
-    sendDataToServer: (data: File[]) => void;
+    uploadFileCallBack: (loadedImage?: Omit<Config, 'src'>, error?: UploadFileErrors) => void;
+    config: Config[];
 }
 
 const BoundingArea: FC<BoundingAreaProps> = ({
     className,
-    size,
+    boundingAreaSize = 'normal',
     uploadPhraseText,
     maxFileSize = 2097152, //2МБ in bytes
     debugFileData = false,
-    isStopSizeAndAcceptValidation = false,
     acceptReg,
     uploadFileCallBack,
-    getFileCallBack,
-    sendDataToServer,
-    data,
 }) => {
     const uploadArea = useRef<HTMLDivElement>(null);
     const [isDrag, setIsDrag] = useState<boolean>(false);
-    const [filesData, setFilesData] = useState<File[]>([]);
     const [isError, setIsError] = useState<boolean>(false);
-
-    useEffect(() => {
-        // fix after setting mocks
-        setFilesData([]);
-    }, [data]);
 
     const returnFileFrom = (
         e:
@@ -81,14 +58,14 @@ const BoundingArea: FC<BoundingAreaProps> = ({
             e.stopPropagation();
             setIsDrag(false);
             const file = returnFileFrom(e);
+            const formData = new FormData();
+            formData.append('image', file);
+            console.log(file);
             debugFileData && console.log(file);
-            if (!isStopSizeAndAcceptValidation && file) {
+            if (file) {
                 !isValid(acceptReg, file) && returnErrorWithStatus(UploadFileErrors.AcceptReg);
                 file?.size > maxFileSize && returnErrorWithStatus(UploadFileErrors.Size);
-                setFilesData((prevState) => (!prevState ? [file] : [...prevState, file]));
                 setIsError(false);
-            }
-            if (file) {
                 const reader = new FileReader();
                 const img = new Image();
                 reader.onload = (e) => {
@@ -97,11 +74,15 @@ const BoundingArea: FC<BoundingAreaProps> = ({
                     reader.readAsDataURL(file);
                 };
             }
-            file && uploadFileCallBack(file);
-            file && getFileCallBack(file);
-            file && sendDataToServer(filesData);
+            file &&
+                uploadFileCallBack({
+                    data: formData,
+                    fileName: file.name,
+                    extension: file.type,
+                    date: new Date(Date.now()),
+                });
         },
-        [debugFileData, acceptReg, isStopSizeAndAcceptValidation, maxFileSize, uploadFileCallBack],
+        [debugFileData, acceptReg, maxFileSize, uploadFileCallBack],
     );
 
     const onDragLeave = (): void => {
@@ -115,11 +96,13 @@ const BoundingArea: FC<BoundingAreaProps> = ({
         isError && setIsError(false);
     };
 
+    const lineMaxValue: string = boundingAreaSize === 'small' ? '300' : boundingAreaSize === 'normal' ? '400' : '500';
+
     return (
         <div
             ref={uploadArea}
             className={`${styles.boundingWrapper} ${className} ${isDrag && styles.isDragOver} ${
-                size && `styles.${size}`
+                boundingAreaSize && styles[boundingAreaSize]
             }`}
             onDragEnter={onDragOverAndEnterLogic}
             onDragLeave={onDragLeave}
@@ -135,6 +118,14 @@ const BoundingArea: FC<BoundingAreaProps> = ({
                 // Нужно обдумать структуру вывода изображений внутри компонента
                 // filesData.map((el) => <img src={el.} alt={el.name}/>)
             }
+            <div className={styles.horizontalSizeLine}>
+                <span>0</span>
+                <span>{lineMaxValue}</span>
+            </div>
+            <div className={styles.verticalSizeLine}>
+                <span>0</span>
+                <span>{lineMaxValue}</span>
+            </div>
         </div>
     );
 };
