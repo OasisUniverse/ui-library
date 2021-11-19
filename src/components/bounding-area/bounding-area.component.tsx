@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useCallback, useRef, useState } from 'react';
 import styles from './bounding-area.module.scss';
 import { Config } from '../../interfaces';
+import UploadIcon from '../../assets/images/svg/upload-icon.component';
 
 export enum UploadFileErrors {
     Size,
@@ -15,17 +16,18 @@ export interface BoundingAreaProps {
     debugFileData?: boolean;
     acceptReg: string;
     uploadFileCallBack: (loadedImage?: Omit<Config, 'src'>, error?: UploadFileErrors) => void;
-    config: Config[];
+    layersConfig: Config[];
 }
 
 const BoundingArea: FC<BoundingAreaProps> = ({
     className,
     boundingAreaSize = 'normal',
-    uploadPhraseText,
+    uploadPhraseText = 'Перетащите или загрузите собственный файл',
     maxFileSize = 2097152, //2МБ in bytes
     debugFileData = false,
     acceptReg,
     uploadFileCallBack,
+    layersConfig,
 }) => {
     const uploadArea = useRef<HTMLDivElement>(null);
     const [isDrag, setIsDrag] = useState<boolean>(false);
@@ -95,9 +97,8 @@ const BoundingArea: FC<BoundingAreaProps> = ({
         !isDrag && setIsDrag(true);
         isError && setIsError(false);
     };
-
+    console.log(layersConfig?.length);
     const lineMaxValue: string = boundingAreaSize === 'small' ? '300' : boundingAreaSize === 'normal' ? '400' : '500';
-
     return (
         <div
             ref={uploadArea}
@@ -118,6 +119,12 @@ const BoundingArea: FC<BoundingAreaProps> = ({
                 // Нужно обдумать структуру вывода изображений внутри компонента
                 // filesData.map((el) => <img src={el.} alt={el.name}/>)
             }
+            {layersConfig?.length === 0 && (
+                <>
+                    <UploadIcon />
+                    <span className={styles.uploadFilesText}>{uploadPhraseText}</span>
+                </>
+            )}
             <div className={styles.horizontalSizeLine}>
                 <span>0</span>
                 <span>{lineMaxValue}</span>

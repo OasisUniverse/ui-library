@@ -16,4 +16,5 @@ Initial.args = {
         loadedImage ? console.log(loadedImage) : console.log(error);
     },
     acceptReg: 'image/jpg, image/png',
+    layersConfig: [],
 };
