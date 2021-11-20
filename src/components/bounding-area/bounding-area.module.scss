@@ -22,8 +22,8 @@
         height: 500px;
     }
 
-    &.isDragOver {
-        border: dashed #ffde00;
+    > input {
+        visibility: hidden;
     }
 
     > svg {
@@ -41,7 +41,8 @@
         letter-spacing: 0.05em;
         background: linear-gradient(180deg, rgba(45, 70, 185, 1) 0%, rgba(240, 55, 165, 1) 100%);
         color: transparent;
-        background-clip: text;
+        -webkit-background-clip: text;
+        -moz-background-clip: padding;
     }
 
     .dropMessage {

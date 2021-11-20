@@ -29,6 +29,7 @@ const BoundingArea: FC<BoundingAreaProps> = ({
     uploadFileCallBack,
     layersConfig,
 }) => {
+    const fileInput = useRef<HTMLInputElement>(null);
     const uploadArea = useRef<HTMLDivElement>(null);
     const [isDrag, setIsDrag] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
@@ -60,32 +61,39 @@ const BoundingArea: FC<BoundingAreaProps> = ({
             e.stopPropagation();
             setIsDrag(false);
             const file = returnFileFrom(e);
-            const formData = new FormData();
-            formData.append('image', file);
-            console.log(file);
             debugFileData && console.log(file);
+            const formData = new FormData();
             if (file) {
-                !isValid(acceptReg, file) && returnErrorWithStatus(UploadFileErrors.AcceptReg);
-                file?.size > maxFileSize && returnErrorWithStatus(UploadFileErrors.Size);
+                if (!isValid(acceptReg, file)) {
+                    returnErrorWithStatus(UploadFileErrors.AcceptReg);
+                    return;
+                }
+                if (file?.size > maxFileSize) {
+                    returnErrorWithStatus(UploadFileErrors.Size);
+                    return;
+                }
+                formData.append(file.name, file);
                 setIsError(false);
                 const reader = new FileReader();
                 const img = new Image();
                 reader.onload = (e) => {
                     if (e?.target?.result) img.src = e.target.result as string;
-                    console.log(e?.target?.result);
                     reader.readAsDataURL(file);
                 };
+                file &&
+                    uploadFileCallBack({
+                        data: formData,
+                        fileName: file.name,
+                        extension: file.type,
+                        date: new Date(Date.now()),
+                    });
             }
-            file &&
-                uploadFileCallBack({
-                    data: formData,
-                    fileName: file.name,
-                    extension: file.type,
-                    date: new Date(Date.now()),
-                });
+            console.log(layersConfig);
         },
         [debugFileData, acceptReg, maxFileSize, uploadFileCallBack],
     );
+
+    const openFileSelectFolder = () => fileInput?.current?.click();
 
     const onDragLeave = (): void => {
         isDrag && setIsDrag(false);
@@ -97,7 +105,7 @@ const BoundingArea: FC<BoundingAreaProps> = ({
         !isDrag && setIsDrag(true);
         isError && setIsError(false);
     };
-    console.log(layersConfig?.length);
+
     const lineMaxValue: string = boundingAreaSize === 'small' ? '300' : boundingAreaSize === 'normal' ? '400' : '500';
     return (
         <div
@@ -109,16 +117,25 @@ const BoundingArea: FC<BoundingAreaProps> = ({
             onDragLeave={onDragLeave}
             onDragOver={onDragOverAndEnterLogic}
             onDrop={uploadFile}
+            onClick={openFileSelectFolder}
         >
-            {isDrag && (
-                <span onDragOver={onDragOverAndEnterLogic} className={styles.dropMessage}>
-                    {uploadPhraseText ?? 'Отпустите, чтобы загрузить изображение'}
-                </span>
-            )}
-            {
-                // Нужно обдумать структуру вывода изображений внутри компонента
-                // filesData.map((el) => <img src={el.} alt={el.name}/>)
-            }
+            <input ref={fileInput} type='file' onChange={uploadFile} accept={acceptReg} />
+            {layersConfig?.length === 0 &&
+                layersConfig.map((el, index) => (
+                    <img
+                        key={el.fileName}
+                        src={el.src}
+                        style={{
+                            position: 'absolute',
+                            zIndex: index,
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                        }}
+                        alt={el.fileName}
+                    />
+                ))}
             {layersConfig?.length === 0 && (
                 <>
                     <UploadIcon />
