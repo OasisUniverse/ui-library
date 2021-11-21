@@ -1,1 +1,1 @@
-export * from './bounding-area';
+export * from './glue-images-area';

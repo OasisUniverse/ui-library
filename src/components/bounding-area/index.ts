@@ -1,1 +1,1 @@
-export * from './bounding-area.component';
+export * from './glue-images-area.component.tsx';

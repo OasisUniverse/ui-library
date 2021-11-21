@@ -28,7 +28,7 @@
         "@typings/typings.d.ts"
     ],
     "include": [
-        "src/**/*"
+        "src/index.ts"
     ],
     "exclude": [
         "node_modules",

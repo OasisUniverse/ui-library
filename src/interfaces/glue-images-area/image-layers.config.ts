@@ -1,7 +1,7 @@
-export interface Config {
-    data: FormData;
+export interface ImageLayersConfig {
     fileName: string;
     extension: string;
     date: Date;
+    size: number;
     src: string;
 }
