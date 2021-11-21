@@ -1,11 +1,11 @@
 import React from 'react';
-import BoundingArea, { BoundingAreaProps } from './glue-images-area.component.tsx';
+import GlueImagesArea, {GlueImagesAreaProps} from './glue-images-area.component.tsx';
 import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const initialProps: BoundingAreaProps = {
+const initialProps: GlueImagesAreaProps = {
     uploadFileCallBack: () => {
         return;
     },
@@ -22,7 +22,7 @@ const defaultDropProps = {
 
 describe('<BoundingArea/> test list', () => {
     beforeAll(() => {
-        component = shallow(<BoundingArea {...initialProps} />);
+        component = shallow(<GlueImagesArea {...initialProps} />);
     });
     afterEach(() => {
         jest.clearAllMocks();
