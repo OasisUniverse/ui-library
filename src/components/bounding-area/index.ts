@@ -1,1 +1,1 @@
-export * from './glue-images-area.component.tsx';
+export * from './glue-images-area.component';

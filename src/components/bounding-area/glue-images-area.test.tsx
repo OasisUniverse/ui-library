@@ -1,5 +1,5 @@
 import React from 'react';
-import GlueImagesArea, {GlueImagesAreaProps} from './glue-images-area.component.tsx';
+import GlueImagesArea, { GlueImagesAreaProps } from './glue-images-area.component.tsx';
 import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 

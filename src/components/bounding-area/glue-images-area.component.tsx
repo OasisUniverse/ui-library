@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useCallback, useRef, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import styles from './glue-images-area.module.scss';
 import { ImageLayersConfig } from '../../interfaces';
 import UploadIcon from '../../assets/images/svg/upload-icon.component';
@@ -10,7 +10,7 @@ export enum UploadFileErrors {
 
 export interface GlueImagesAreaProps {
     className?: string;
-    areaSize: number;
+    maxAreaSize: number;
     uploadPhraseText: string;
     maxFileSize?: number;
     debugFileData?: boolean;
@@ -21,7 +21,7 @@ export interface GlueImagesAreaProps {
 
 const GlueImagesArea: FC<GlueImagesAreaProps> = ({
     className,
-    areaSize,
+    maxAreaSize,
     uploadPhraseText,
     maxFileSize = 5242880, //5МБ in bytes
     debugFileData = false,
@@ -31,6 +31,14 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
     const fileInput = useRef<HTMLInputElement>(null);
     const uploadArea = useRef<HTMLDivElement>(null);
     const [isDrag, setIsDrag] = useState<boolean>(false);
+
+    const componentSize = useMemo(() => ({ width: `${maxAreaSize}px`, height: `${maxAreaSize}px` }), [maxAreaSize]);
+
+    const acceptableTypes = 'image/png, image/svg, image/jpg, image/jpeg';
+
+    const minAreaSize = 0;
+
+    const linesAroundArea = ['horizontalSizeLine', 'verticalSizeLine'];
 
     const returnFileFromArea = (
         e:
@@ -59,7 +67,7 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
             const file = returnFileFromArea(e);
             debugFileData && console.log(file);
             if (file) {
-                if (!isValid('image/png, image/svg, image/jpg, image/jpeg', file)) {
+                if (!isValid(acceptableTypes, file)) {
                     returnErrorWithStatus(UploadFileErrors.AcceptReg);
                     return;
                 }
@@ -90,7 +98,6 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
 
         !isDrag && setIsDrag(true);
     };
-
     return (
         <div
             ref={uploadArea}
@@ -100,43 +107,30 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
             onDragOver={onDragOver}
             onDrop={uploadFile}
             onClick={openContextFolder}
-            style={{ width: `${areaSize}px`, height: `${areaSize}px` }}
+            style={componentSize}
         >
-            <input
-                ref={fileInput}
-                type='file'
-                onChange={uploadFile}
-                accept={'image/png, image/svg, image/jpg, image/jpeg'}
-            />
-            {layersConfig?.map((el, index) => (
-                <img
-                    key={el.fileName}
-                    src={el.src}
-                    style={{
-                        position: 'absolute',
-                        zIndex: index,
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                    }}
-                    alt={el.fileName}
-                />
-            ))}
-            {!layersConfig?.length && (
+            <input ref={fileInput} type='file' onChange={uploadFile} accept={acceptableTypes} />
+            {!layersConfig?.length ? (
                 <div className={styles.emptyImageListViewBox}>
                     <UploadIcon />
                     <span className={styles.uploadFilesText}>{uploadPhraseText}</span>
                 </div>
+            ) : (
+                layersConfig?.map((el, index) => (
+                    <img
+                        key={el.fileName}
+                        src={el.src}
+                        style={useMemo(() => ({ zIndex: index * 50 }), [layersConfig])}
+                        alt={el.fileName}
+                    />
+                ))
             )}
-            <div className={styles.horizontalSizeLine}>
-                <span>0</span>
-                <span>{areaSize}</span>
-            </div>
-            <div className={styles.verticalSizeLine}>
-                <span>0</span>
-                <span>{areaSize}</span>
-            </div>
+            {linesAroundArea.map((className) => (
+                <div key={className} className={styles[className]}>
+                    <span>{minAreaSize}</span>
+                    <span>{maxAreaSize}</span>
+                </div>
+            ))}
         </div>
     );
 };

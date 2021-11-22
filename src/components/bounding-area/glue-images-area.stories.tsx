@@ -15,6 +15,6 @@ Initial.args = {
         loadedImage ? console.log(loadedImage) : console.log(error);
     },
     layersConfig: [],
-    areaSize: 600,
+    maxAreaSize: 600,
     uploadPhraseText: 'Перетащите в область или кликните по ней, чтобы загрузить файл',
 };
