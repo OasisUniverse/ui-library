@@ -3,6 +3,10 @@ import styles from './glue-images-area.module.scss';
 import { ImageLayersConfig } from '../../interfaces';
 import UploadIcon from '../../assets/images/svg/upload-icon.component';
 
+const ACCEPTABLE_AREA_TYPES = 'image/png, image/svg, image/jpg, image/jpeg';
+
+const minAreaSize = 0;
+
 export enum UploadFileErrors {
     Size,
     AcceptReg,
@@ -14,7 +18,6 @@ export interface GlueImagesAreaProps {
     uploadPhraseText: string;
     maxFileSize?: number;
     debugFileData?: boolean;
-    acceptReg: string;
     uploadFileCallBack: (loadedImage?: File, error?: UploadFileErrors) => void;
     layersConfig: ImageLayersConfig[];
 }
@@ -32,13 +35,23 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
     const uploadArea = useRef<HTMLDivElement>(null);
     const [isDrag, setIsDrag] = useState<boolean>(false);
 
-    const componentSize = useMemo(() => ({ width: `${maxAreaSize}px`, height: `${maxAreaSize}px` }), [maxAreaSize]);
+    const componentChangeableStyles = useMemo(
+        () => ({ width: `${maxAreaSize}px`, height: `${maxAreaSize}px` }),
+        [maxAreaSize],
+    );
 
-    const acceptableTypes = 'image/png, image/svg, image/jpg, image/jpeg';
-
-    const minAreaSize = 0;
-
-    const linesAroundArea = ['horizontalSizeLine', 'verticalSizeLine'];
+    const linesAroundArea = [
+        {
+            wrapperClassName: styles.horizontalSizeLine,
+            minAreaSize,
+            maxAreaSize,
+        },
+        {
+            wrapperClassName: styles.verticalSizeLine,
+            minAreaSize,
+            maxAreaSize,
+        },
+    ];
 
     const returnFileFromArea = (
         e:
@@ -53,7 +66,8 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
         uploadFileCallBack(undefined, type);
     };
 
-    const isValid = (string: string, file: File) => string.split(',').some((reg) => file.type.trim() === reg.trim());
+    const isFileTypeAcceptable = (string: string, file: File) =>
+        string.split(',').some((reg) => file.type.trim() === reg.trim());
 
     const uploadFile = useCallback(
         (
@@ -67,7 +81,7 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
             const file = returnFileFromArea(e);
             debugFileData && console.log(file);
             if (file) {
-                if (!isValid(acceptableTypes, file)) {
+                if (!isFileTypeAcceptable(ACCEPTABLE_AREA_TYPES, file)) {
                     returnErrorWithStatus(UploadFileErrors.AcceptReg);
                     return;
                 }
@@ -75,7 +89,7 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
                     returnErrorWithStatus(UploadFileErrors.Size);
                     return;
                 }
-                uploadFileCallBack(file);
+                uploadFileCallBack(file, undefined);
             }
         },
         [debugFileData, maxFileSize, uploadFileCallBack],
@@ -107,9 +121,9 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
             onDragOver={onDragOver}
             onDrop={uploadFile}
             onClick={openContextFolder}
-            style={componentSize}
+            style={componentChangeableStyles}
         >
-            <input ref={fileInput} type='file' onChange={uploadFile} accept={acceptableTypes} />
+            <input ref={fileInput} type='file' onChange={uploadFile} accept={ACCEPTABLE_AREA_TYPES} />
             {!layersConfig?.length ? (
                 <div className={styles.emptyImageListViewBox}>
                     <UploadIcon />
@@ -117,16 +131,11 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
                 </div>
             ) : (
                 layersConfig?.map((el, index) => (
-                    <img
-                        key={el.fileName}
-                        src={el.src}
-                        style={useMemo(() => ({ zIndex: index * 50 }), [layersConfig])}
-                        alt={el.fileName}
-                    />
+                    <img key={el.fileName} src={el.src} style={{ zIndex: index * 50 }} alt={el.fileName} />
                 ))
             )}
-            {linesAroundArea.map((className) => (
-                <div key={className} className={styles[className]}>
+            {linesAroundArea.map(({ wrapperClassName, minAreaSize, maxAreaSize }, index) => (
+                <div key={index} className={styles[wrapperClassName]}>
                     <span>{minAreaSize}</span>
                     <span>{maxAreaSize}</span>
                 </div>

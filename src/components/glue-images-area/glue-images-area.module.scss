@@ -1,5 +1,5 @@
 $area-background-color: #f8f8f8;
-$size-lines-props: 1px solid black;
+$size-lines-border-style: 1px solid black;
 
 .GlueImagesAreaWrapper {
     position: relative;
@@ -65,7 +65,7 @@ $size-lines-props: 1px solid black;
         flex-direction: row;
         width: 100%;
         padding-top: 4px;
-        border-top: $size-lines-props;
+        border-top: $size-lines-border-style;
     }
 
     .verticalSizeLine {
@@ -74,7 +74,7 @@ $size-lines-props: 1px solid black;
         flex-direction: column;
         height: 100%;
         padding-left: 4px;
-        border-left: $size-lines-props;
+        border-left: $size-lines-border-style;
 
         > span {
             transform: rotateZ(-90deg) translateX(2px);
