@@ -3,8 +3,8 @@ import styles from './glue-images-area.module.scss';
 import { ImageLayersConfig } from '../../interfaces';
 import UploadIcon from '../../assets/images/svg/upload-icon.component';
 
-const ACCEPTABLE_AREA_TYPES = 'image/png, image/svg, image/jpg, image/jpeg';
-
+const ACCEPTABLE_AREA_TYPES = ['image/png', 'image/svg', 'image/jpg', 'image/jpeg'];
+const ACCEPTABLE_TYPES_FOR_INPUT = 'image/png, image/svg, image/jpg, image/jpeg';
 const minAreaSize = 0;
 
 export enum UploadFileErrors {
@@ -68,8 +68,8 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
         uploadFileCallBack(undefined, type);
     };
 
-    const isFileTypeAcceptable = (string: string, file: File) =>
-        string.split(',').some((reg) => file.type.trim() === reg.trim());
+    const isFileTypeAcceptable = (string: string[], file: File) =>
+        string.some((reg) => file.type.trim() === reg.trim());
 
     const uploadFile = useCallback(
         (
@@ -125,7 +125,7 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
             onClick={openContextFolder}
             style={componentChangeableStyles}
         >
-            <input ref={fileInput} type='file' onChange={uploadFile} accept={ACCEPTABLE_AREA_TYPES} />
+            <input ref={fileInput} type='file' onChange={uploadFile} accept={ACCEPTABLE_TYPES_FOR_INPUT} />
             {!layersConfig?.length ? (
                 <div className={styles.emptyImageListViewBox}>
                     <UploadIcon />
