@@ -24,9 +24,6 @@ describe('<GlueImagesArea/> test list', () => {
     beforeAll(() => {
         component = shallow(<GlueImagesArea {...initialProps} />);
     });
-    // afterEach(() => {
-    //     jest.clearAllMocks();
-    // });
     it('Place image to component', () => {
         const file = new Blob(['foo'], { type: 'image/jpg' });
         component.simulate('drop', {
