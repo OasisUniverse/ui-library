@@ -40,18 +40,20 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
         [maxAreaSize],
     );
 
-    const linesAroundArea = [
-        {
-            wrapperClassName: styles.horizontalSizeLine,
-            minAreaSize,
-            maxAreaSize,
-        },
-        {
-            wrapperClassName: styles.verticalSizeLine,
-            minAreaSize,
-            maxAreaSize,
-        },
-    ];
+    const linesAroundArea = useMemo(() => {
+        return [
+            {
+                wrapperClassName: styles.horizontalSizeLine,
+                minAreaSize,
+                maxAreaSize,
+            },
+            {
+                wrapperClassName: styles.verticalSizeLine,
+                minAreaSize,
+                maxAreaSize,
+            },
+        ];
+    }, [maxAreaSize]);
 
     const returnFileFromArea = (
         e:
@@ -135,7 +137,7 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
                 ))
             )}
             {linesAroundArea.map(({ wrapperClassName, minAreaSize, maxAreaSize }, index) => (
-                <div key={index} className={styles[wrapperClassName]}>
+                <div key={`${wrapperClassName}-${index}-${Math.random() * 100}`} className={styles[wrapperClassName]}>
                     <span>{minAreaSize}</span>
                     <span>{maxAreaSize}</span>
                 </div>
