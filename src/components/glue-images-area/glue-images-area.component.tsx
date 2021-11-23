@@ -137,7 +137,7 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
                 ))
             )}
             {linesAroundArea.map(({ wrapperClassName, minAreaSize, maxAreaSize }, index) => (
-                <div key={`${wrapperClassName}-${index}-${Math.random() * 100}`} className={styles[wrapperClassName]}>
+                <div key={`${wrapperClassName}-${index}-${Math.random() * 100}`} className={wrapperClassName}>
                     <span>{minAreaSize}</span>
                     <span>{maxAreaSize}</span>
                 </div>
