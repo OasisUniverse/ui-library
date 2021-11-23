@@ -4,8 +4,8 @@ import { ImageLayersConfig } from '../../interfaces';
 import UploadIcon from '../../assets/images/svg/upload-icon.component';
 
 const ACCEPTABLE_AREA_TYPES = ['image/png', 'image/svg', 'image/jpg', 'image/jpeg'];
-const ACCEPTABLE_TYPES_FOR_INPUT = 'image/png, image/svg, image/jpg, image/jpeg';
-const minAreaSize = 0;
+const ACCEPTABLE_TYPES_FOR_INPUT = ACCEPTABLE_AREA_TYPES.join(',');
+const MIN_AREA_SIZE = 0;
 
 export enum UploadFileErrors {
     Size,
@@ -14,6 +14,7 @@ export enum UploadFileErrors {
 
 export interface GlueImagesAreaProps {
     className?: string;
+    onDragOverClassName?: string;
     maxAreaSize: number;
     uploadPhraseText: string;
     maxFileSize?: number;
@@ -24,6 +25,7 @@ export interface GlueImagesAreaProps {
 
 const GlueImagesArea: FC<GlueImagesAreaProps> = ({
     className,
+    onDragOverClassName,
     maxAreaSize,
     uploadPhraseText,
     maxFileSize = 5242880, //5МБ in bytes
@@ -44,12 +46,12 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
         return [
             {
                 wrapperClassName: styles.horizontalSizeLine,
-                minAreaSize,
+                MIN_AREA_SIZE,
                 maxAreaSize,
             },
             {
                 wrapperClassName: styles.verticalSizeLine,
-                minAreaSize,
+                MIN_AREA_SIZE,
                 maxAreaSize,
             },
         ];
@@ -99,8 +101,11 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
 
     const openContextFolder = () => fileInput?.current?.click();
 
-    const onDragLeave = (): void => {
-        isDrag && setIsDrag(false);
+    const onDragEnter = (e: React.DragEvent): void => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        !isDrag && setIsDrag(true);
     };
 
     const onDragOver = (e: React.DragEvent<HTMLDivElement>): void => {
@@ -108,19 +113,16 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
         e.stopPropagation();
     };
 
-    const onDragEnter = (e: React.DragEvent): void => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        !isDrag && setIsDrag(true);
+    const onDragLeave = (): void => {
+        isDrag && setIsDrag(false);
     };
     return (
         <div
             ref={uploadArea}
-            className={`${styles.GlueImagesAreaWrapper} ${isDrag && styles.isDragOver} ${className}`}
+            className={`${styles.glueImagesAreaWrapper} ${className} ${isDrag && onDragOverClassName}`}
+            onDragOver={onDragOver}
             onDragEnter={onDragEnter}
             onDragLeave={onDragLeave}
-            onDragOver={onDragOver}
             onDrop={uploadFile}
             onClick={openContextFolder}
             style={componentChangeableStyles}
@@ -136,9 +138,9 @@ const GlueImagesArea: FC<GlueImagesAreaProps> = ({
                     <img key={el.fileName} src={el.src} style={{ zIndex: index * 50 }} alt={el.fileName} />
                 ))
             )}
-            {linesAroundArea.map(({ wrapperClassName, minAreaSize, maxAreaSize }, index) => (
+            {linesAroundArea.map(({ wrapperClassName, MIN_AREA_SIZE, maxAreaSize }, index) => (
                 <div key={`${wrapperClassName}-${index}-${Math.random() * 100}`} className={wrapperClassName}>
-                    <span>{minAreaSize}</span>
+                    <span>{MIN_AREA_SIZE}</span>
                     <span>{maxAreaSize}</span>
                 </div>
             ))}

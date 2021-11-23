@@ -10,6 +10,7 @@ const initialProps: GlueImagesAreaProps = {
     maxAreaSize: 500,
     layersConfig: [],
     uploadPhraseText: '',
+    onDragOverClassName: 'onDragOverClassName',
 };
 
 let component: ShallowWrapper;
@@ -23,9 +24,9 @@ describe('<GlueImagesArea/> test list', () => {
     beforeAll(() => {
         component = shallow(<GlueImagesArea {...initialProps} />);
     });
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
+    // afterEach(() => {
+    //     jest.clearAllMocks();
+    // });
     it('Place image to component', () => {
         const file = new Blob(['foo'], { type: 'image/jpg' });
         component.simulate('drop', {
@@ -75,9 +76,9 @@ describe('<GlueImagesArea/> test list', () => {
     });
     it('Test onDragEnter then onDragLeave', () => {
         component.simulate('dragEnter', defaultDropProps);
-        expect(component.hasClass('isDragOver')).toBeTruthy();
+        expect(component.hasClass('onDragOverClassName')).toBeTruthy();
         component.simulate('dragLeave', defaultDropProps);
-        expect(component.hasClass('isDragOver')).toBeFalsy();
+        expect(component.hasClass('onDragOverClassName')).toBeFalsy();
     });
     it("Shouldn't call default behavior", () => {
         component.simulate('dragOver', defaultDropProps);
