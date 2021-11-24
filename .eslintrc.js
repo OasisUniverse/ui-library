@@ -27,5 +27,6 @@ module.exports = {
         ],
         'jsx-quotes': ['error', 'prefer-single'],
         'react/jsx-indent-props': [2, 'first'],
+        'react/prop-types': 0,
     },
 };

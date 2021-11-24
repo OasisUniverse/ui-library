@@ -1,44 +1,44 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+    "compilerOptions": {
+        "target": "es5",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "baseUrl": ".",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "react-jsx",
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noEmit": true
+    },
+    "files": [
+        "@typings/typings.d.ts"
     ],
-    "baseUrl": ".",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "alwaysStrict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noEmit": true
-  },
-  "files": [
-    "@typings/typings.d.ts"
-  ],
-  "include": [
-    "src/index.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "/dist",
-    "**/*.mock.tsx",
-    "**/*.test.ts",
-    "**/*.tst.tsx",
-    "**/*.test.tsx",
-    "test-utils.ts",
-    "**/*.stories.tsx",
-    "**/*.stories.js"
-  ]
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "/dist",
+        "**/*.mock.tsx",
+        "**/*.test.ts",
+        "**/*.tst.tsx",
+        "**/*.test.tsx",
+        "test-utils.ts",
+        "**/*.stories.tsx",
+        "**/*.stories.js"
+    ]
 }
