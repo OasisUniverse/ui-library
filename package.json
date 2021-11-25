@@ -1,9 +1,12 @@
 {
     "name": "oasis-ui",
-    "version": "1.0.0",
+    "version": "1.0.0-semantic-release",
     "private": false,
     "description": "oasis ui kit",
     "main": "lib/index.js",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/@OasisUniverse/ui-lib"
+    },
     "files": [
         "/lib"
     ],
