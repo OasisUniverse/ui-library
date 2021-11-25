@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Node JS Package
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the develop branch
+  push:
+    branches:
+      - 'release/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  common:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 12.x, 14.x, 16.x ]
+                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+      steps:
+        - uses: actions/checkout@v2
+        - name: Use Node.js ${{ matrix.node-version }}
+        - uses: actions/setup-node@v2
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+        - name: Install dependencies
+          run: npm ci && npm run install-peers
+        - name: Linter check
+          run: npm run lint
+        - name: Run tests
+          run: npm run test
+        - name: Prepare library build
+          run: npm run prepare
+        - name: Publish
+          run: npm publish
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
