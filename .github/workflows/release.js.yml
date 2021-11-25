@@ -32,12 +32,11 @@ jobs:
                 run: npm run prepare
     publish:
         runs-on: ubuntu-latest
-        needs: common
+        needs: [ common ]
         steps:
             -   uses: actions/checkout@v2
-            -   name: Preparing Node.js
-                uses: actions/setup-node@v2
-                with:
+            -   uses: actions/setup-node@v2
+            -   with:
                     node-version: 16
                     registry-url: https://npm.pkg.github.com/
                     scope: '@OasisUniverse'

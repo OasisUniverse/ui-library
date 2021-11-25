@@ -1,6 +1,6 @@
 {
     "name": "oasis-ui",
-    "version": "1.0.0-semantic-release",
+    "version": "1.0.0",
     "private": false,
     "description": "oasis ui kit",
     "main": "lib/index.js",
