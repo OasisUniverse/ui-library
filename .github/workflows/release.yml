@@ -6,8 +6,8 @@ on:
             -   'release/**'
 
 jobs:
-    prepare:
-        name: 'Prepare 🛂'
+    publish:
+        name: 'Prepare and publish 🛂'
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -27,18 +27,6 @@ jobs:
                 run: npm run test
             -   name: 'Prepare library build 🏗️'
                 run: npm run prepare
-
-    publish:
-        name: 'Publish 🚀'
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v2
-            -   uses: actions/setup-node@v2
-            -   with:
-                    node-version: 12
-                    registry-url: https://registry.npmjs.org/
-            -   name: 'Install deps 📦️'
-                run: npm install
             -   name: 'Publish package 🚚'
             -   run: npm publish
             -   env:
