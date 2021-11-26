@@ -1,14 +1,11 @@
 {
-    "name": "oasis-ui",
+    "name": "ui-lib",
     "version": "1.0.0",
     "private": false,
-    "description": "oasis ui kit",
+    "description": "OasisUniverse ui kit",
     "main": "lib/index.js",
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/@OasisUniverse/ui-lib"
-    },
     "files": [
-        "/lib"
+        "lib"
     ],
     "scripts": {
         "start": "start-storybook -p 6006 -s public",
