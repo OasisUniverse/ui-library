@@ -27,6 +27,7 @@ jobs:
                 run: npm run test
             -   name: 'Prepare library build 🏗️'
                 run: npm run prepare
+
     publish:
         name: 'Publish 🚀'
         runs-on: ubuntu-latest
