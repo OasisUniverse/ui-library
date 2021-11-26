@@ -1,7 +1,7 @@
 name: NPM Package Publish ✨
 
 on:
-    pull_request:
+    push:
         branches:
             -   'release/**'
 
