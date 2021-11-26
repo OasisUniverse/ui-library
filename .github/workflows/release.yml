@@ -7,27 +7,26 @@ on:
 
 jobs:
     publish:
-        name: Prepare and publish 🛂
+        name: "Prepare and publish 🛂"
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [ 12.x, 14.x, 16.x ]
         steps:
-            -   uses: actions/checkout@v2
-            -   name: Use Node.js ${{ matrix.node-version }}
+            -   name: "Checkout source code"
+                uses: actions/checkout@v2
+            -   name: "Setup Node.js"
                 uses: actions/setup-node@v2
                 with:
-                    node-version: ${{ matrix.node-version }}
+                    node-version: 16
+                    registry-url: https://registry.npmjs.org/
                     cache: 'npm'
-            -   name: Install deps 📦️
+            -   name: "Install deps 📦️"
                 run: npm ci && npm run install-peers
-            -   name: Linter check 📝
+            -   name: "Linter check 📝"
                 run: npm run lint
-            -   name: Run tests 📄
+            -   name: "Run tests 📄"
                 run: npm run test
-            -   name: Prepare library build 🏗️
+            -   name: "Prepare library build 🏗️"
                 run: npm run prepare
-            -   name: Publish package 🚚
+            -   name: "Publish package 🚚"
             -   run: npm publish
             -   env:
                     NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
