@@ -27,6 +27,6 @@ jobs:
             -   name: "Prepare library build 🏗️"
                 run: npm run prepare
             -   name: "Publish package 🚚"
-            -   run: npm publish
-            -   env:
+                run: npm publish
+                env:
                     NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
