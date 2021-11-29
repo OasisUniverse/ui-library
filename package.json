@@ -2,7 +2,7 @@
     "name": "oasis-ui",
     "version": "1.0.0",
     "private": false,
-    "description": "OasisUniverse ui kit",
+    "description": "OasisUniverse ui kit by DragonCats",
     "main": "lib/index.js",
     "files": [
         "lib"
