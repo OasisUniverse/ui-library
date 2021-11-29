@@ -20,7 +20,6 @@ jobs:
                     node-version: 16
                     registry-url: 'https://registry.npmjs.org'
                     cache: 'npm'
-                    scope: '@oasisuniverse'
             -   name: "Install deps 📦️"
                 run: npm ci && npm run install-peers
             -   name: "Linter check 📝"
