@@ -4,8 +4,6 @@ on:
     workflow_dispatch:
         branches:
             -   'release/**'
-        tags:
-            - 'v*.*.*'
 
 jobs:
     publish:
@@ -23,10 +21,6 @@ jobs:
                     scope: '@oasisuniverse'
             -   name: "Install deps 📦️"
                 run: npm ci && npm run install-peers
-            -   name: "Linter check 📝"
-                run: npm run lint
-            -   name: "Run tests 📄"
-                run: npm run test
             -   name: "Prepare library build 🏗️"
                 run: npm run prepare
             -   name: "Publish package 🚀"
