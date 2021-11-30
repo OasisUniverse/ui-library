@@ -1,13 +1,11 @@
 name: NPM Package Publish ✨
 
 on:
-    push:
+    workflow_dispatch:
         branches:
             -   'release/**'
         tags:
             - 'v*.*.*'
-
-    workflow_dispatch:
 
 jobs:
     publish:
