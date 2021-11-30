@@ -1,7 +1,7 @@
 # OASIS UI components library
 
 ## Usage
-Install node module from nexus repository with `npm i oasis-ui`
+Install node module using `npm i @oasisuniverse/oasis-ui` or `yarn add @oasisuniverse/oasis-ui`
 
-After installation, you can import components `import { GlueImagesArea } from '@oasisuniverse/ui-library'`
+After installation, you can import components `import { GlueImagesArea } from '@oasisuniverse/oasis-ui'`
 
