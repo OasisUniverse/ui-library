@@ -34,4 +34,3 @@ jobs:
                 run: npm run test
             -   name: "Prepare library build 🏗️"
                 run: npm run prepare
-            -   run: echo "Everything is fine ✨"
