@@ -1,0 +1,294 @@
+@import '../../styles/colors';
+
+$placeholder-color: #a0a3bd;
+$inactive-background-color: #f6f6fa;
+$active-color: #0c15ff;
+$warning-color: #ffa800;
+$error-color: #ff3535;
+$label-color: rgba(0, 0, 0, 0.75);
+
+.wrapper {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	.label,
+	.errorLabel {
+		font-family: inherit;
+		position: absolute;
+		font-size: 12px;
+
+		&.topLeft {
+			left: 0;
+			top: -18px;
+		}
+
+		&.topRight {
+			right: 0;
+			top: -18px;
+		}
+
+		&.bottomLeft {
+			left: 0;
+			bottom: -18px;
+		}
+
+		&.bottomRight {
+			right: 0;
+			bottom: -18px;
+		}
+	}
+
+	.innerText {
+		margin-right: 12px;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 28px;
+		cursor: default;
+	}
+
+	.innerButton {
+		padding: 7px 10px;
+		border-radius: 8px;
+		font-size: 16px;
+		font-weight: 400;
+		font-style: normal;
+		line-height: 17px;
+		margin-right: 12px;
+		background-color: color(primary, dark);
+		color: white !important;
+		white-space: nowrap;
+		transition: 0.3s ease all;
+
+		&.outline {
+			box-sizing: border-box;
+			background: transparent !important;
+			border: 1px solid color(accent, dark);
+		}
+
+		&.accent {
+			background: color(accent, dark);
+		}
+	}
+
+	.innerButton, {
+		cursor: pointer;
+	}
+
+	.label {
+		color: white;
+	}
+
+	.errorLabel {
+		color: $error-color;
+		text-shadow: 0 0 10px color(statuses, error);
+	}
+
+	.cross {
+		cursor: pointer;
+		margin-left: auto;
+		opacity: 1;
+		transition: 0.3s ease opacity;
+		margin-right: 24px;
+	}
+
+	.inputWrapper,
+	textarea {
+		width: 100%;
+		border-radius: 16px;
+		border: 2px solid color(primary, dark);
+		box-sizing: border-box;
+		background-color: color(background, content);
+		transition: 0.3s ease;
+		transition-property: color, background, border, box-shadow;
+
+		&.active {
+			background: color(background, main);
+			border: 2px solid color(accent, dark);
+			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+			color: white;
+
+			&::placeholder {
+				color: white;
+			}
+
+			&.error {
+				border: 2px solid color(statuses, error);
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			}
+		}
+
+		&.error {
+			background: color(background, main);
+			border: 2px solid color(statuses, error);
+			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			color: white;
+
+			&::placeholder {
+				color: white;
+			}
+		}
+
+		&.resize {
+			resize: vertical;
+		}
+	}
+
+	textarea {
+		resize: none;
+		padding: 10px;
+		outline: none;
+		overflow-y: auto;
+		height: 100%;
+		font-size: 16px;
+		font-family: inherit;
+		scroll-snap-type: y proximity;
+
+		&::-webkit-scrollbar-track {
+			width: 0;
+		}
+
+		&::-webkit-scrollbar {
+			width: 0;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			width: 0;
+		}
+
+		&::placeholder {
+			transition: all 0.3s ease;
+			color: color(inneres, placeholder);
+		}
+
+		&:hover {
+			border: 2px solid color(accent, dark);
+			background-color: color(background, content);
+			box-shadow: inset 0 0 10px color(accent, dark);
+
+			&::placeholder {
+				color: color(accent, dark);
+			}
+
+			&.active {
+				background: color(background, main);
+				color: white;
+			}
+		}
+
+		&:focus {
+			background-color: color(background, main);
+			border: 2px solid color(accent, dark);
+			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+
+			.error {
+				border: 2px solid $error-color;
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+				color: white;
+			}
+		}
+	}
+
+	.inputWrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		height: 64px;
+		color: white;
+
+		&.active {
+			border: 2px solid color(accent, dark);
+			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+
+			&.error {
+				border: 2px solid color(statuses, error);
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			}
+		}
+
+		&.error {
+			border: 2px solid color(statuses, error);
+			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+		}
+
+		&.search {
+			border-radius: 25px;
+
+			&.active {
+				border: 2px solid color(accent, dark);
+				box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+			}
+		}
+
+		input {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			height: 100%;
+			box-sizing: border-box;
+			border: none;
+			outline: none;
+			border-radius: inherit;
+			padding: 0 24px 0 24px;
+			text-overflow: ellipsis;
+			transition: 0.5s ease-in color;
+			font-size: 16px;
+			font-family: inherit;
+			background: transparent;
+
+			&::placeholder {
+				transition: all 0.3s ease;
+				color: color(inneres, placeholder);
+			}
+		}
+
+		&.active,
+		&.error {
+			background-color: transparent;
+
+			input {
+				color: white;
+			}
+		}
+
+		&:focus-within {
+			background-color: color(background, main);
+			border: 2px solid color(accent, dark);
+			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+
+			input {
+				color: white;
+
+				&::placeholder {
+					color: white;
+				}
+			}
+
+			&.error {
+				border: 2px solid color(statuses, error);
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			}
+		}
+
+		&:hover {
+			border: 2px solid color(accent, dark);
+			box-shadow: inset 0 0 10px color(accent, dark);
+			color: color(accent, dark);
+
+			input::placeholder {
+				color: color(accent, dark);
+			}
+
+			&.error {
+				border: 2px solid color(statuses, error);
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+
+				input::placeholder {
+					color: white;
+				}
+			}
+		}
+	}
+}

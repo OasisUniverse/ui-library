@@ -2,93 +2,93 @@ $area-background-color: #f8f8f8;
 $size-lines-border-style: 1px solid black;
 
 .glueImagesAreaWrapper {
-    position: relative;
-    border-radius: 5px;
-    background: $area-background-color;
-    box-shadow: 2px 2px 10px 5px rgba(45, 70, 185, 0.2);
-    width: 100%;
-    height: 100%;
-    user-select: none;
-    cursor: pointer;
+	position: relative;
+	border-radius: 5px;
+	background: $area-background-color;
+	box-shadow: 2px 2px 10px 5px rgba(45, 70, 185, 0.2);
+	width: 100%;
+	height: 100%;
+	user-select: none;
+	cursor: pointer;
 
-    input {
-        display: none;
-        visibility: hidden;
-    }
+	input {
+		display: none;
+		visibility: hidden;
+	}
 
-    .emptyImageListViewBox {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-sizing: border-box;
-        padding: 15% 0;
-        align-items: center;
-        position: relative;
-        width: 100%;
-        height: 100%;
+	.emptyImageListViewBox {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		box-sizing: border-box;
+		padding: 15% 0;
+		align-items: center;
+		position: relative;
+		width: 100%;
+		height: 100%;
 
-        > svg {
-            height: 70%;
-            width: 70%;
-            transform: scale(0.8);
-        }
+		> svg {
+			height: 70%;
+			width: 70%;
+			transform: scale(0.8);
+		}
 
-        .uploadFilesText {
-            user-select: none;
-            font-size: 1.4rem;
-            width: 80%;
-            text-align: center;
-            background: linear-gradient(180deg, rgba(45, 70, 185, 1) 0%, rgba(240, 55, 165, 1) 100%);
-            color: transparent;
-            -webkit-background-clip: text;
-            -moz-background-clip: padding;
-        }
-    }
+		.uploadFilesText {
+			user-select: none;
+			font-size: 1.4rem;
+			width: 80%;
+			text-align: center;
+			background: linear-gradient(180deg, rgba(45, 70, 185, 1) 0%, rgba(240, 55, 165, 1) 100%);
+			color: transparent;
+			-webkit-background-clip: text;
+			-moz-background-clip: padding;
+		}
+	}
 
-    > img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+	> img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
 
-    .horizontalSizeLine,
-    .verticalSizeLine {
-        display: flex;
-        justify-content: space-between;
-        position: absolute;
-        font-weight: bold;
-        font-size: 8px;
-        line-height: 10px;
-        pointer-events: none;
-    }
+	.horizontalSizeLine,
+	.verticalSizeLine {
+		display: flex;
+		justify-content: space-between;
+		position: absolute;
+		font-weight: bold;
+		font-size: 8px;
+		line-height: 10px;
+		pointer-events: none;
+	}
 
-    .horizontalSizeLine {
-        left: 0;
-        bottom: -30px;
-        flex-direction: row;
-        width: 100%;
-        padding-top: 4px;
-        border-top: $size-lines-border-style;
-    }
+	.horizontalSizeLine {
+		left: 0;
+		bottom: -30px;
+		flex-direction: row;
+		width: 100%;
+		padding-top: 4px;
+		border-top: $size-lines-border-style;
+	}
 
-    .verticalSizeLine {
-        top: 0;
-        right: -30px;
-        flex-direction: column;
-        height: 100%;
-        padding-left: 4px;
-        border-left: $size-lines-border-style;
+	.verticalSizeLine {
+		top: 0;
+		right: -30px;
+		flex-direction: column;
+		height: 100%;
+		padding-left: 4px;
+		border-left: $size-lines-border-style;
 
-        > span {
-            transform: rotateZ(-90deg) translateX(2px);
+		> span {
+			transform: rotateZ(-90deg) translateX(2px);
 
-            &:first-child {
-                text-align: center;
-            }
-        }
-    }
+			&:first-child {
+				text-align: center;
+			}
+		}
+	}
 }
 
     

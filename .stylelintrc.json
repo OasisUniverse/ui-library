@@ -6,10 +6,11 @@
         "stylelint-config-standard"
     ],
     "rules": {
-        "indentation": 4,
+        "indentation": "tab",
         "max-line-length": 120,
         "no-missing-end-of-source-newline": null,
         "scss/dollar-variable-colon-space-after": "always",
-        "at-rule-no-unknown": null
+        "at-rule-no-unknown": null,
+        "no-eol-whitespace": null
     }
 }
