@@ -9,9 +9,9 @@ export const defaultInputProps: InputProps[] = [
             return;
         },
 
-        label: 'Случайная подсказка',
+        label: 'Label',
         labelPosition: LabelPosition.BottomRight,
-        placeholder: 'Введите текст...',
+        placeholder: 'Введите текст',
         autocomplete: true,
     },
     {
@@ -23,9 +23,9 @@ export const defaultInputProps: InputProps[] = [
         additionalElementsConfig: [
             <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
         ],
-        label: 'Стрелочка и кнопочка',
+        label: 'Label',
         labelPosition: LabelPosition.TopRight,
-        placeholder: 'Пароль',
+        placeholder: 'Введите пароль',
         autocomplete: true,
     },
     {
@@ -39,7 +39,7 @@ export const defaultInputProps: InputProps[] = [
         ],
         label: 'some text',
         labelPosition: LabelPosition.BottomLeft,
-        placeholder: 'Пароль',
+        placeholder: 'Введите пароль',
         autocomplete: true,
     },
     {
@@ -53,7 +53,7 @@ export const defaultInputProps: InputProps[] = [
         ],
         label: 'Возмущение c кнопкой',
         labelPosition: LabelPosition.TopRight,
-        placeholder: 'Пароль',
+        placeholder: 'Введите пароль',
         autocomplete: true,
     },
     {
@@ -66,11 +66,9 @@ export const defaultInputProps: InputProps[] = [
             <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
         ],
         isError: true,
-        label: 'Стрелочка и кнопочка !',
+        label: 'Label',
         labelPosition: LabelPosition.TopLeft,
-        errorLabel: 'Неверный логин или пароль',
-        errorLabelPosition: LabelPosition.BottomRight,
-        placeholder: 'Пароль',
+        placeholder: 'Введите пароль',
         autocomplete: true,
     },
     {
@@ -82,7 +80,7 @@ export const defaultInputProps: InputProps[] = [
         additionalElementsConfig: [
             <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
         ],
-        label: 'Кнопочка',
+        label: 'Label',
         labelPosition: LabelPosition.BottomRight,
         placeholder: 'Новый пароль',
         autocomplete: true,
@@ -93,9 +91,9 @@ export const defaultInputProps: InputProps[] = [
             return;
         },
 
-        label: 'Вторичная кнопка',
+        label: 'Label',
         labelPosition: LabelPosition.BottomRight,
-        placeholder: 'Введите текст...',
+        placeholder: 'Введите текст',
         autocomplete: true,
     },
     {
@@ -138,8 +136,6 @@ export const defaultInputProps: InputProps[] = [
         placeholder: 'Введите текст...',
         className: 'hello',
         isError: true,
-        errorLabel: 'Заполните поле',
-        errorLabelPosition: LabelPosition.BottomRight,
         autocomplete: true,
     },
     {
@@ -150,7 +146,6 @@ export const defaultInputProps: InputProps[] = [
 
         placeholder: 'Введите текст...',
         isError: true,
-        errorLabel: 'Любой текст',
         labelPosition: LabelPosition.TopLeft,
     },
     {
@@ -160,7 +155,6 @@ export const defaultInputProps: InputProps[] = [
 
         placeholder: 'Введите текст...',
         isError: true,
-        errorLabel: 'Любой текст',
     },
     {
         value: 'hello',

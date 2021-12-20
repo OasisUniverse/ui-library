@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { Input, InputProps } from './input.component';
+import { Input, InputProps, InputType } from './input.component';
 import { defaultInputProps, searchInputProps, textInputProps } from '../../__mocks__/input.mock';
 
 export default {
@@ -11,6 +11,16 @@ export default {
 const Template: Story<InputProps> = (args: InputProps) => <Input {...args} />;
 
 export const EventType = Template.bind({});
+
+EventType.args = {
+    value: '',
+    onChange: (): void => {
+        return;
+    },
+    type: InputType.PasswordInput,
+    placeholder: 'Введите текст',
+    autocomplete: true,
+};
 
 export const Presentation = (): JSX.Element => (
     <div style={{ background: '#1a1a22', padding: '50px' }}>
@@ -30,7 +40,7 @@ export const Presentation = (): JSX.Element => (
                 </div>
             ))}
         </div>
-        <span style={{ fontSize: '30px', marginBottom: '15px' }}>SearchInput</span>
+        <span style={{ fontSize: '30px', marginBottom: '15px', color: 'white' }}>SearchInput</span>
         <div
             style={{
                 boxSizing: 'border-box',
@@ -46,7 +56,7 @@ export const Presentation = (): JSX.Element => (
                 </div>
             ))}
         </div>
-        <span style={{ fontSize: '30px' }}>TextArea</span>
+        <span style={{ fontSize: '30px', color: 'white' }}>TextArea</span>
         <div
             style={{
                 width: '100%',
@@ -75,13 +85,3 @@ export const Presentation = (): JSX.Element => (
         </div>
     </div>
 );
-
-EventType.args = {
-    value: '',
-    onChange: (): void => {
-        return;
-    },
-
-    placeholder: 'Введите текст...',
-    autocomplete: true,
-};
