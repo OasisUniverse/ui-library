@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import styles from './glue-images-area.module.scss';
 import { ImageLayersConfig } from '../../interfaces';
-import UploadIcon from '../../assets/images/svg/upload-icon.component';
+import UploadIcon from '../../shared/svg/upload-icon.component';
 
 const ACCEPTABLE_AREA_TYPES = ['image/png', 'image/svg', 'image/jpg', 'image/jpeg'];
 const ACCEPTABLE_TYPES_FOR_INPUT = ACCEPTABLE_AREA_TYPES.join(',');

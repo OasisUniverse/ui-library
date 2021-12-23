@@ -4,8 +4,6 @@
 .wrapper {
 	position: relative;
 	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
 	font-family: Inter, sans-serif;
 	
 	.label {
@@ -39,10 +37,7 @@
 		display: flex;
 		align-items: center;
 		margin-left: auto;
-		
-		> svg {
-			cursor: pointer;
-		}
+		cursor: pointer;
 	}
 	
 	.inputWrapper,
@@ -149,7 +144,8 @@
 		}
 		
 		&.active,
-		&.error {
+		&.error,
+		&.disabled {
 			background: color(background, main);
 		}
 		
@@ -159,13 +155,6 @@
 			height: 22px;
 			width: 22px;
 			cursor: pointer;
-		}
-		
-		.separationLine {
-			width: 2px;
-			height: 64px;
-			background-color: color(statuses, muted);
-			margin-right: 12px;
 		}
 		
 		input {
@@ -190,7 +179,6 @@
 		}
 		
 		&.disabled {
-			background: color(background, main);
 			border-color: color(statuses, muted);
 			
 			input {
@@ -225,11 +213,6 @@
 			&:hover {
 				box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
 			}
-			
-			&.error {
-				border: 2px solid color(statuses, error);
-				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
-			}
 		}
 		
 		&.error {
@@ -237,7 +220,7 @@
 			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
 		}
 		
-		&.search {
+		&.searchWrapper {
 			border-radius: 25px;
 			
 			&.active {

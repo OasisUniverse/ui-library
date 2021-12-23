@@ -1,5 +1,3 @@
-import React from 'react';
-import { Button } from 'src/components/button/button.component';
 import { InputProps, InputType, LabelPosition } from '../components';
 
 export const defaultInputProps: InputProps[] = [
@@ -20,9 +18,6 @@ export const defaultInputProps: InputProps[] = [
         onChange: (): void => {
             return;
         },
-        additionalElementsConfig: [
-            <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
-        ],
         label: 'Label',
         labelPosition: LabelPosition.TopRight,
         placeholder: 'Введите пароль',
@@ -34,9 +29,6 @@ export const defaultInputProps: InputProps[] = [
         onChange: (): void => {
             return;
         },
-        additionalElementsConfig: [
-            <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
-        ],
         label: 'some text',
         labelPosition: LabelPosition.BottomLeft,
         placeholder: 'Введите пароль',
@@ -48,9 +40,6 @@ export const defaultInputProps: InputProps[] = [
         onChange: (): void => {
             return;
         },
-        additionalElementsConfig: [
-            <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
-        ],
         label: 'Возмущение c кнопкой',
         labelPosition: LabelPosition.TopRight,
         placeholder: 'Введите пароль',
@@ -62,9 +51,6 @@ export const defaultInputProps: InputProps[] = [
         onChange: (): void => {
             return;
         },
-        additionalElementsConfig: [
-            <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
-        ],
         isError: true,
         label: 'Label',
         labelPosition: LabelPosition.TopLeft,
@@ -77,9 +63,6 @@ export const defaultInputProps: InputProps[] = [
         onChange: (): void => {
             return;
         },
-        additionalElementsConfig: [
-            <Button key={Math.random()} text={'Забыли?'} onClick={(e) => console.log('pressed!', e.currentTarget)} />,
-        ],
         label: 'Label',
         labelPosition: LabelPosition.BottomRight,
         placeholder: 'Новый пароль',

@@ -10,7 +10,7 @@ const INPUT_TYPE = 'text';
 const INPUT_PASSWORD_TYPE = 'password';
 
 export enum InputType {
-    TextInput,
+    DefaultInput,
     PasswordInput,
     SearchInput,
     TextArea,
@@ -40,7 +40,7 @@ export interface InputProps {
 }
 
 export const Input: FC<InputProps> = ({
-    type = InputType.TextInput,
+    type = InputType.DefaultInput,
     onChange,
     label,
     labelPosition = LabelPosition.TopRight,
@@ -54,17 +54,13 @@ export const Input: FC<InputProps> = ({
     isError = false,
     disabled = false,
 }: InputProps) => {
-    const isRenderDisplayPasswordIcon = useMemo(
+    const [isDisplayPassword, setDisplayPassword] = useState<boolean>(false);
+    const isRenderPasswordIcon = useMemo(
         () => type === InputType.PasswordInput && !disabled && value,
         [type, disabled, value],
     );
-    const [isDisplayPassword, setDisplayPassword] = useState<boolean>(false);
-    const displayPasswordHandler = () => {
-        setDisplayPassword(true);
-    };
-    const hidingPasswordHandler = () => {
-        setDisplayPassword(false);
-    };
+    const displayPasswordHandler = () => setDisplayPassword(true);
+    const hidingPasswordHandler = () => setDisplayPassword(false);
 
     const labelElement = label && (
         <span className={`${styles.label} ${labelPosition && styles[labelPosition]}`}>{label}</span>
@@ -72,10 +68,15 @@ export const Input: FC<InputProps> = ({
 
     const clearInput = () => onChange('');
 
-    const isRenderCrossIcon = useMemo(() => {
-        return value && !disabled && type !== InputType.TextArea && type !== InputType.PasswordInput;
-    }, [type, value, disabled]);
+    const onChangeCallback = useCallback(
+        (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(event.target.value, event),
+        [onChange],
+    );
 
+    const isRenderCrossIcon = useMemo(
+        () => value && !disabled && type !== InputType.TextArea && type !== InputType.PasswordInput,
+        [type, value, disabled],
+    );
     const crossIcon = isRenderCrossIcon && (
         <span className={styles.cross} onClick={clearInput}>
             <InputCrossIcon />
@@ -83,27 +84,23 @@ export const Input: FC<InputProps> = ({
     );
 
     const isActiveStyle = useMemo(() => value && !disabled && styles.active, [value, disabled]);
-
     const isErrorStyle = useMemo(() => isError && !disabled && styles.error, [isError, disabled]);
+    const isDisabled = useMemo(() => (disabled ? styles.disabled : ''), [disabled]);
+    const isResizableStyle = useMemo(() => (isResizable ? styles.resize : ''), [isResizable]);
 
-    const onChangeCallback = useCallback(
-        (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(event.target.value),
-        [onChange],
+    const inputWrapperClassName = useMemo(
+        () =>
+            `${type !== InputType.TextArea ? styles.inputWrapper : ''} ${
+                type === InputType.SearchInput ? styles.searchWrapper : ''
+            } ${value ? isActiveStyle : ''} ${isError ? isErrorStyle : ''} ${isDisabled}`,
+        [type, value, isError],
     );
-
-    const inputWrapperClassName = `${disabled ? styles.disabled : ''} ${disabled ? styles.disabled : ''} ${
-        type !== InputType.TextArea ? styles.inputWrapper : ''
-    } ${type === InputType.SearchInput ? styles.search : ''} ${value ? isActiveStyle : ''} ${
-        isError ? isErrorStyle : ''
-    }`;
     return (
         <div className={`${styles.wrapper} ${className}`}>
             {labelElement}
             {type === InputType.TextArea ? (
                 <textarea
-                    className={`${isActiveStyle} ${disabled ? styles.disabled : ''} ${isErrorStyle} ${
-                        isResizable && styles.resize
-                    }`}
+                    className={`${isActiveStyle} ${isDisabled} ${isErrorStyle} ${isResizableStyle}`}
                     autoComplete={autocomplete ? 'on' : 'off'}
                     placeholder={placeholder}
                     autoFocus={autofocus}
@@ -124,9 +121,9 @@ export const Input: FC<InputProps> = ({
                     />
                     {disabled && <LockIcon />}
                     {crossIcon}
-                    {isRenderDisplayPasswordIcon && (
+                    {isRenderPasswordIcon && (
                         <span
-                            className={`${styles.passwordDisplayButton}`}
+                            className={styles.passwordDisplayButton}
                             onPointerDown={displayPasswordHandler}
                             onPointerUp={hidingPasswordHandler}
                         >
