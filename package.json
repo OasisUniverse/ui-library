@@ -45,7 +45,8 @@
             "src/**/*.{ts,tsx}",
             "!**/index.ts",
             "!**/index.tsx",
-            "!**/*.stories.{ts,tsx}"
+            "!**/*.stories.{ts,tsx}",
+            "!src/shared/svg/*.{ts,tsx}"
         ]
     },
     "browserslist": {

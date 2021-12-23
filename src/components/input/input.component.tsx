@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
-import InputCrossIcon from 'src/shared/svg/input-cross-icon';
+import InputCrossIcon from 'src/shared/svg/input-cross.icon';
 import styles from './input.module.scss';
-import ClosedEyeIcon from '../../shared/svg/closed-eye-icon';
-import OpenedEyeIcon from '../../shared/svg/opened-eye-icon';
-import LockIcon from '../../shared/svg/lock-icon';
+import ClosedEyeIcon from '../../shared/svg/closed-eye.icon';
+import OpenedEyeIcon from '../../shared/svg/opened-eye.icon';
+import LockIcon from '../../shared/svg/lock.icon';
 
 const INPUT_TYPE = 'text';
 const INPUT_PASSWORD_TYPE = 'password';

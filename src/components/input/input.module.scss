@@ -47,8 +47,7 @@
 		border: 2px solid color(primary, dark);
 		box-sizing: border-box;
 		background-color: color(background, content);
-		transition: 0.6s ease;
-		transition-delay: 0.3s;
+		transition: 0.2s ease-in-out;
 		transition-property: color, background, border, box-shadow;
 		
 		&.active {
@@ -59,11 +58,6 @@
 			
 			&::placeholder {
 				color: white;
-			}
-			
-			&.error {
-				border: 2px solid color(statuses, error);
-				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
 			}
 		}
 		
@@ -106,7 +100,6 @@
 		}
 		
 		&::placeholder {
-			transition: all 0.3s ease;
 			color: color(inneres, placeholder);
 		}
 		
@@ -114,15 +107,6 @@
 			border: 2px solid color(accent, dark);
 			background-color: color(background, content);
 			box-shadow: inset 0 0 10px color(accent, dark);
-			
-			&::placeholder {
-				color: color(accent, dark);
-			}
-			
-			&.active {
-				background: color(background, main);
-				color: white;
-			}
 		}
 		
 		&:disabled {
@@ -167,30 +151,18 @@
 			outline: none;
 			border-radius: inherit;
 			text-overflow: ellipsis;
-			transition: 0.3s ease-in color;
+			transition: 0.3s ease-in-out color;
 			font-size: 16px;
 			font-family: inherit;
 			background: transparent;
 			
 			&::placeholder {
-				transition: all 0.3s ease;
+				transition: all 0.3s ease-in-out;
 				color: color(inneres, placeholder);
 			}
 		}
 		
-		&.disabled {
-			border-color: color(statuses, muted);
-			
-			input {
-				font-weight: 500;
-				color: color(inneres, placeholder);
-			}
-			
-			input::placeholder {
-				font-weight: 400;
-				color: color(statuses, muted);
-			}
-		}
+
 		
 		&.active input,
 		&.error input {
@@ -201,15 +173,7 @@
 		&.active {
 			border: 2px solid color(accent, dark);
 			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
-			
-			.elementWrapper {
-				border-left: 1px solid color(accent, dark);
-				
-				&:nth-child(2) {
-					border: none;
-				}
-			}
-			
+
 			&:hover {
 				box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
 			}
@@ -219,47 +183,38 @@
 			border: 2px solid color(statuses, error);
 			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
 		}
-		
+
 		&.searchWrapper {
 			border-radius: 25px;
-			
-			&.active {
-				border: 2px solid color(accent, dark);
-				box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+		}
+
+		&.disabled {
+			border-color: color(statuses, muted);
+			box-shadow: none;
+			color: color(statuses, muted);
+			cursor: not-allowed;
+
+			input {
+				font-weight: 500;
+				color: color(inneres, placeholder);
+				cursor: not-allowed;
+
+				&::placeholder {
+					font-weight: 400;
+					color: color(statuses, muted);
+				}
 			}
 		}
-		
+
 		&:hover {
 			border: 2px solid color(accent, dark);
 			box-shadow: inset 0 0 10px color(accent, dark);
 			color: color(accent, dark);
-			
-			input::placeholder {
-				color: color(accent, dark);
-			}
-			
-			&.error {
-				border: 2px solid color(statuses, error);
-				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
-				
-				input::placeholder {
-					color: white;
-				}
-			}
-			
+
 			&.disabled {
-				box-shadow: none;
 				color: color(statuses, muted);
 				border-color: color(statuses, muted);
-				cursor: not-allowed;
-				
-				input {
-					cursor: not-allowed;
-					
-					&::placeholder {
-						color: color(statuses, muted);
-					}
-				}
+				box-shadow: none;
 			}
 		}
 	}
