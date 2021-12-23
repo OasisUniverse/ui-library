@@ -1,0 +1,221 @@
+@import '../../styles/colors';
+@import '../../styles/fonts';
+
+.wrapper {
+	position: relative;
+	display: flex;
+	font-family: Inter, sans-serif;
+	
+	.label {
+		font-family: inherit;
+		position: absolute;
+		font-size: 12px;
+		color: white;
+		
+		&.topLeft {
+			left: 0;
+			top: -18px;
+		}
+		
+		&.topRight {
+			right: 0;
+			top: -18px;
+		}
+		
+		&.bottomLeft {
+			left: 0;
+			bottom: -18px;
+		}
+		
+		&.bottomRight {
+			right: 0;
+			bottom: -18px;
+		}
+	}
+	
+	.cross {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+		cursor: pointer;
+	}
+	
+	.inputWrapper,
+	textarea {
+		width: 100%;
+		border-radius: 16px;
+		border: 2px solid color(primary, dark);
+		box-sizing: border-box;
+		background-color: color(background, content);
+		transition: 0.2s ease-in-out;
+		transition-property: color, background, border, box-shadow;
+		
+		&.active {
+			background: color(background, main);
+			border: 2px solid color(accent, dark);
+			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+			color: white;
+			
+			&::placeholder {
+				color: white;
+			}
+		}
+		
+		&.error {
+			background: color(background, main);
+			border: 2px solid color(statuses, error);
+			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			color: white;
+			
+			&::placeholder {
+				color: white;
+			}
+		}
+		
+		&.resize {
+			resize: vertical;
+		}
+	}
+	
+	textarea {
+		resize: none;
+		padding: 10px;
+		outline: none;
+		overflow-y: auto;
+		height: 100%;
+		font-size: 16px;
+		font-family: inherit;
+		scroll-snap-type: y proximity;
+		
+		&::-webkit-scrollbar-track {
+			width: 0;
+		}
+		
+		&::-webkit-scrollbar {
+			width: 0;
+		}
+		
+		&::-webkit-scrollbar-thumb {
+			width: 0;
+		}
+		
+		&::placeholder {
+			color: color(inneres, placeholder);
+		}
+		
+		&:hover {
+			border: 2px solid color(accent, dark);
+			background-color: color(background, content);
+			box-shadow: inset 0 0 10px color(accent, dark);
+		}
+		
+		&:disabled {
+			background: color(background, main);
+			border-color: color(statuses, muted);
+		}
+	}
+	
+	.inputWrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		height: 64px;
+		color: white;
+		padding: 0 24px 0 24px;
+		
+		&.passwordInput {
+			padding: 0 12px 0 24px;
+		}
+		
+		&.active,
+		&.error,
+		&.disabled {
+			background: color(background, main);
+		}
+		
+		.passwordDisplayButton {
+			display: flex;
+			align-items: center;
+			height: 22px;
+			width: 22px;
+			cursor: pointer;
+		}
+		
+		input {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			height: 100%;
+			box-sizing: border-box;
+			border: none;
+			outline: none;
+			border-radius: inherit;
+			text-overflow: ellipsis;
+			transition: 0.3s ease-in-out color;
+			font-size: 16px;
+			font-family: inherit;
+			background: transparent;
+			
+			&::placeholder {
+				transition: all 0.3s ease-in-out;
+				color: color(inneres, placeholder);
+			}
+		}
+		
+
+		
+		&.active input,
+		&.error input {
+			color: white;
+			background-color: transparent;
+		}
+		
+		&.active {
+			border: 2px solid color(accent, dark);
+			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+
+			&:hover {
+				box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+			}
+		}
+		
+		&.error {
+			border: 2px solid color(statuses, error);
+			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+		}
+
+		&.searchWrapper {
+			border-radius: 25px;
+		}
+
+		&.disabled {
+			border-color: color(statuses, muted);
+			box-shadow: none;
+			color: color(statuses, muted);
+			cursor: not-allowed;
+
+			input {
+				font-weight: 500;
+				color: color(inneres, placeholder);
+				cursor: not-allowed;
+
+				&::placeholder {
+					font-weight: 400;
+					color: color(statuses, muted);
+				}
+			}
+		}
+
+		&:hover {
+			border: 2px solid color(accent, dark);
+			box-shadow: inset 0 0 10px color(accent, dark);
+			color: color(accent, dark);
+
+			&.disabled {
+				color: color(statuses, muted);
+				border-color: color(statuses, muted);
+				box-shadow: none;
+			}
+		}
+	}
+}

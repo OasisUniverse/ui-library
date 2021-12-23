@@ -1,43 +1,41 @@
 $palette: (
-    primary: (
-        base: #2d2d2d,
-        light: #808080,
-        lighter: #d3d3d3,
-    ),
-    secondary: (
-        default: #fed305,
-        active: #fec305,
-    ),
-    tertiary: (
-        base: #f6f5f2,
-        additional: #eeebe6,
-    ),
-    statuses: (
-        error: #ef2525,
-        stop: #f0ad4e,
-        completed: #5cb85c,
-        light_button_pressed: #c5a925,
-        dark_button_hover: #464540,
-        dark_button_pressed: #5b5a53,
-    ),
+	primary: (
+		dark: #6333ff,
+		light: #e5adff,
+	),
+	accent: (
+		dark: #0eb56f,
+		light: #abe1ff,
+	),
+	background: (
+		content: #2f1e5e,
+		main: #1a1a22,
+	),
+	statuses: (
+		error: #ac1818,
+		muted: #8c8c8c,
+	),
+	inneres: (
+		placeholder: rgba(221, 221, 221, 0.7),
+	)
 );
 
 @function color($color, $tone) {
-    @if map-has-key($palette, $color) {
-        $color: map-get($palette, $color);
+	@if map-has-key($palette, $color) {
+		$color: map-get($palette, $color);
 
-        @if map-has-key($color, $tone) {
-            $tone: map-get($color, $tone);
+		@if map-has-key($color, $tone) {
+			$tone: map-get($color, $tone);
 
-            @return $tone;
-        }
+			@return $tone;
+		}
 
-        @warn "unknown tone `#{$tone}` in color";
+		@warn "unknown tone `#{$tone}` in color";
 
-        @return null;
-    }
+		@return null;
+	}
 
-    @warn 'unknown color `#{$color}` in palette';
+	@warn 'unknown color `#{$color}` in palette';
 
-    @return null;
+	@return null;
 }

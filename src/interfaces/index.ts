@@ -1,1 +1,1 @@
-export * from './glue-images-area';
+export * from './glue-images-area/image-layers.config';
