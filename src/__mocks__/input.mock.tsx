@@ -29,7 +29,7 @@ export const defaultInputProps: InputProps[] = [
         onChange: (): void => {
             return;
         },
-        label: 'some text',
+        label: 'some value',
         labelPosition: LabelPosition.BottomLeft,
         placeholder: 'Введите пароль',
         autocomplete: true,
