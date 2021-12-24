@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonProps } from './Button.component';
+import { Button, ButtonProps } from './button.component';
 import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { buttonTestMock } from '../../__mocks__/button.test.mock';
