@@ -25,7 +25,7 @@
 		flex-direction: row-reverse;
 	}
 	
-	&.defaultStyle {
+	&.default {
 		color: white;
 		background: color(primary, dark);
 		
@@ -44,7 +44,7 @@
 		}
 	}
 	
-	&.secondaryStyle {
+	&.secondary {
 		color: white;
 		background: color(background, content);
 		border: 2px solid color(primary, dark);
@@ -64,7 +64,7 @@
 		}
 	}
 	
-	&.outlinedStyle {
+	&.outlined {
 		color: color(accent, dark);
 		background: transparent;
 		border: 1px solid color(accent, dark);
@@ -90,14 +90,21 @@
 		cursor: not-allowed;
 	}
 	
-	&.defaultSize {
+	&.small {
+		justify-content: center;
+		align-items: center;
+		height: 64px;
+		width: 64px;
+	}
+	
+	&.medium {
 		font-size: 16px;
 		line-height: 16px;
 		padding: 12px 24px;
 		height: 40px;
 	}
 	
-	&.largeSize {
+	&.large {
 		font-size: 24px;
 		height: 64px;
 	}

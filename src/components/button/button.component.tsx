@@ -1,48 +1,50 @@
-import React, { FC, ReactSVGElement } from 'react';
+import React, { FC, useMemo } from 'react';
 import styles from './button.module.scss';
 
 export enum ButtonSizes {
-    LargeSize = 'largeSize',
-    DefaultSize = 'defaultSize',
+    Large = 'large',
+    Medium = 'medium',
+    Small = 'small',
 }
 
-export enum ButtonStyle {
-    DefaultStyle = 'defaultStyle',
-    SecondaryStyle = 'secondaryStyle',
-    OutlinedStyle = 'outlinedStyle',
+export enum ButtonType {
+    Default = 'default',
+    Secondary = 'secondary',
+    Outlined = 'outlined',
 }
 
 export interface ButtonProps {
     className?: string;
     size?: ButtonSizes;
-    style?: ButtonStyle; // type?
-    value?: string;
-    onClick: (e?: React.MouseEvent<HTMLButtonElement>) => void;
-    icon?: ReactSVGElement;
+    type?: ButtonType;
+    text?: string;
+    onClick: (event?: React.MouseEvent<HTMLButtonElement>) => void;
+    icon?: JSX.Element;
     reverseItems?: boolean;
     disabled?: boolean;
 }
 
 export const Button: FC<ButtonProps> = ({
-    className,
-    size = ButtonSizes.DefaultSize,
-    style = ButtonStyle.DefaultStyle,
-    value,
+    className = '',
+    size = ButtonSizes.Medium,
+    type = ButtonType.Default,
+    text,
     onClick,
     icon,
-    reverseItems,
+    reverseItems = false,
     disabled = false,
 }) => {
-    return (
-        <button
-            className={`${styles.button} ${style ? styles[style] : ''} ${size ? styles[size] : ''} ${
+    const buttonClassName = useMemo(
+        () =>
+            `${styles.button} ${type ? styles[type] : ''} ${size ? styles[size] : ''} ${
                 disabled ? styles.disabled : ''
-            } ${icon && value ? styles.buttonWithIcon : ''} ${reverseItems ? styles.reverseItems : ''} ${className}`}
-            onClick={onClick}
-            disabled={disabled}
-        >
+            } ${icon && text ? styles.buttonWithIcon : ''} ${reverseItems ? styles.reverseItems : ''} ${className}`,
+        [type, size, className, disabled, text, icon, reverseItems],
+    );
+    return (
+        <button className={buttonClassName} onClick={onClick} disabled={disabled}>
             {icon && icon}
-            {value && <span>{value}</span>}
+            {text && text}
         </button>
     );
 };
