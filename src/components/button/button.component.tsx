@@ -37,8 +37,8 @@ export const Button: FC<ButtonProps> = ({
     const buttonClassName = useMemo(
         () =>
             `${styles.button} ${type ? styles[type] : ''} ${size ? styles[size] : ''} ${
-                disabled ? styles.disabled : ''
-            } ${icon && text ? styles.buttonWithIcon : ''} ${reverseItems ? styles.reverseItems : ''} ${className}`,
+                icon && text ? styles.buttonWithIcon : ''
+            } ${reverseItems ? styles.reverseItems : ''} ${className} ${disabled ? styles.disabled : ''}`,
         [type, size, className, disabled, text, icon, reverseItems],
     );
     return (

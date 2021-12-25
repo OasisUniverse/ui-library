@@ -38,14 +38,14 @@ buttonTestMock
         onClick: () => null,
         disabled: false,
     })
-    .set('secondary-large', {
+    .set('secondary-small', {
         size: ButtonSizes.Small,
         type: ButtonType.Secondary,
         icon: <InputCrossIcon />,
         onClick: () => null,
         disabled: false,
     })
-    .set('outlined-medium', {
+    .set('outlined', {
         size: ButtonSizes.Medium,
         type: ButtonType.Outlined,
         text: 'outlined',
@@ -67,23 +67,34 @@ buttonTestMock
         disabled: false,
     })
     .set('default-disabled', {
-        size: ButtonSizes.Large,
-        type: ButtonType.Default,
         text: 'default',
         onClick: () => null,
         disabled: true,
     })
     .set('secondary-disabled', {
-        size: ButtonSizes.Medium,
+        size: ButtonSizes.Large,
         type: ButtonType.Secondary,
         text: 'secondary',
         onClick: () => null,
         disabled: true,
     })
     .set('outlined-disabled', {
-        size: ButtonSizes.Small,
         type: ButtonType.Outlined,
-        text: 'outlined',
+        size: ButtonSizes.Small,
+        icon: <InputCrossIcon />,
         onClick: () => null,
         disabled: true,
+    })
+    .set('icon-and-text', {
+        icon: <InputCrossIcon />,
+        text: 'some text',
+        onClick: () => null,
+        disabled: false,
+    })
+    .set('icon-and-text-reversed', {
+        icon: <InputCrossIcon />,
+        text: 'some text',
+        reverseItems: true,
+        onClick: () => null,
+        disabled: false,
     });

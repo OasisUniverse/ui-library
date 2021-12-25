@@ -24,7 +24,7 @@ const presentationStyle = {
     background: '#1a1a22',
     padding: '50px',
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
+    gridTemplateColumns: 'repeat(3, 1fr)',
     gridTemplateRows: 'auto',
     gap: '50px',
 };

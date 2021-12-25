@@ -10,38 +10,54 @@ const defaultProps: ButtonProps = {
 
 Enzyme.configure({ adapter: new Adapter() });
 
-let defaultButton: ShallowWrapper;
-let secondaryButton: ShallowWrapper;
-let outlinedButton: ShallowWrapper;
+let button: ShallowWrapper;
 
 describe('<Button /> test list', () => {
     beforeAll(() => {
-        defaultButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('default')} />);
-        secondaryButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('secondary')} />);
-        outlinedButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('outlined')} />);
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default')} />);
     });
-    it('render default button with props', () => {
-        expect(defaultButton.hasClass('defaultStyle')).toBeTruthy();
-        expect(defaultButton.hasClass('defaultSize')).toBeTruthy();
-        defaultButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-large')} />);
-        expect(defaultButton.hasClass('largeSize')).toBeTruthy();
-        defaultButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-disabled')} />);
-        expect(defaultButton.hasClass('disabled')).toBeTruthy();
+    // it('render button with button classname', () => {
+    //     expect(button.exists()).toBeTruthy();
+    //     expect(button.hasClass('button')).toBeTruthy();
+    // });
+    it('not disabled', () => {
+        // expect(button.props().disabled).toBeFalsy();
     });
-    it('render secondary button with props', () => {
-        expect(secondaryButton.hasClass('secondaryStyle')).toBeTruthy();
-        expect(secondaryButton.hasClass('defaultSize')).toBeTruthy();
-        secondaryButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('secondary-large')} />);
-        expect(secondaryButton.hasClass('largeSize')).toBeTruthy();
-        secondaryButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('secondary-disabled')} />);
-        expect(secondaryButton.hasClass('disabled')).toBeTruthy();
+    it('disabled', () => {
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-disabled')} />);
+        expect(button.prop('disabled')).toBeTruthy();
+        expect(button.hasClass('disabled')).toBeTruthy();
     });
-    it('render outlined button with props', () => {
-        expect(outlinedButton.hasClass('outlinedStyle')).toBeTruthy();
-        expect(outlinedButton.hasClass('defaultSize')).toBeTruthy();
-        outlinedButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('outlined-large')} />);
-        expect(outlinedButton.hasClass('largeSize')).toBeTruthy();
-        outlinedButton = shallow(<Button {...defaultProps} {...buttonTestMock.get('outlined-disabled')} />);
-        expect(outlinedButton.hasClass('disabled')).toBeTruthy();
+    it('has a large size', () => {
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-large')} />);
+        expect(button.hasClass('large')).toBeTruthy();
+    });
+    it('has an icon inside', () => {
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-small')} />);
+        expect(button.childAt(0).exists()).toBeTruthy();
+    });
+    it('has an icon and text inside', () => {
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('icon-and-text')} />);
+        expect(button.childAt(0).exists()).toBeTruthy();
+        expect(button.childAt(1).exists()).toBeTruthy();
+        expect(button.hasClass('buttonWithIcon')).toBeTruthy();
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('icon-and-text-reversed')} />);
+        expect(button.hasClass('reverseItems')).toBeTruthy();
+    });
+    it('has every size', () => {
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default')} />);
+        expect(button.hasClass('medium')).toBeTruthy();
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-large')} />);
+        expect(button.hasClass('large')).toBeTruthy();
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-small')} />);
+        expect(button.hasClass('small')).toBeTruthy();
+    });
+    it('has every type', () => {
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default')} />);
+        expect(button.hasClass('default')).toBeTruthy();
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('secondary')} />);
+        expect(button.hasClass('secondary')).toBeTruthy();
+        button = shallow(<Button {...defaultProps} {...buttonTestMock.get('outlined')} />);
+        expect(button.hasClass('outlined')).toBeTruthy();
     });
 });
