@@ -16,13 +16,6 @@ describe('<Button /> test list', () => {
     beforeAll(() => {
         button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default')} />);
     });
-    // it('render button with button classname', () => {
-    //     expect(button.exists()).toBeTruthy();
-    //     expect(button.hasClass('button')).toBeTruthy();
-    // });
-    it('not disabled', () => {
-        // expect(button.props().disabled).toBeFalsy();
-    });
     it('disabled', () => {
         button = shallow(<Button {...defaultProps} {...buttonTestMock.get('default-disabled')} />);
         expect(button.prop('disabled')).toBeTruthy();
