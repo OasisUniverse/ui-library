@@ -7,89 +7,89 @@ export const buttonTestMock: Map<string, ButtonProps> = new Map();
 buttonTestMock
     .set('default', {
         text: 'default',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('default-large', {
         size: ButtonSizes.Large,
         type: ButtonType.Default,
         text: 'Default',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('default-small', {
         size: ButtonSizes.Small,
         type: ButtonType.Default,
         icon: <InputCrossIcon />,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('secondary', {
         size: ButtonSizes.Medium,
         type: ButtonType.Secondary,
         text: 'secondary',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('secondary-large', {
         size: ButtonSizes.Large,
         type: ButtonType.Secondary,
         text: 'Secondary',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('secondary-small', {
         size: ButtonSizes.Small,
         type: ButtonType.Secondary,
         icon: <InputCrossIcon />,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('outlined', {
         size: ButtonSizes.Medium,
         type: ButtonType.Outlined,
         text: 'outlined',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('outlined-large', {
         size: ButtonSizes.Large,
         type: ButtonType.Outlined,
         text: 'Outlined',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('outlined-small', {
         size: ButtonSizes.Small,
         type: ButtonType.Outlined,
         icon: <InputCrossIcon />,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('default-disabled', {
         text: 'default',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: true,
     })
     .set('secondary-disabled', {
         size: ButtonSizes.Large,
         type: ButtonType.Secondary,
         text: 'secondary',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: true,
     })
     .set('outlined-disabled', {
         type: ButtonType.Outlined,
         size: ButtonSizes.Small,
         icon: <InputCrossIcon />,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: true,
     })
     .set('icon-and-text', {
         size: ButtonSizes.Large,
         icon: <InputCrossIcon />,
         text: 'some text',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('icon-and-text-reversed', {
@@ -97,7 +97,7 @@ buttonTestMock
         icon: <InputCrossIcon />,
         text: 'some text',
         reverseItems: true,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('loading-small', {
@@ -106,7 +106,7 @@ buttonTestMock
         reverseItems: true,
         href: '#',
         isLoading: true,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('loading-large', {
@@ -115,7 +115,7 @@ buttonTestMock
         reverseItems: true,
         href: '#',
         isLoading: true,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('loading-medium', {
@@ -124,7 +124,7 @@ buttonTestMock
         reverseItems: true,
         href: '#',
         isLoading: true,
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('not-loading-link', {
@@ -133,7 +133,7 @@ buttonTestMock
         text: 'some text1',
         reverseItems: true,
         href: '#',
-        onClick: () => null,
+        onClick: jest.fn(),
         disabled: false,
     })
     .set('disabled-link', {
@@ -143,6 +143,5 @@ buttonTestMock
         text: 'some text1',
         reverseItems: true,
         href: '#',
-        onClick: () => null,
-        disabled: true,
+        onClick: jest.fn(),
     });

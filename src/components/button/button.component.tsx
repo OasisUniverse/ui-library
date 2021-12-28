@@ -41,21 +41,19 @@ export const Button: FC<ButtonProps> = forwardRef(
             reverseItems = false,
             disabled = false,
         },
-        forwardRef,
+        ref,
     ) => {
         const buttonClassName = useMemo(
             () =>
-                `${styles.button} ${type ? styles[type] : ''} ${size ? styles[size] : ''} ${
-                    icon && text ? styles.buttonWithIcon : ''
-                } ${reverseItems ? styles.reverseItems : ''} ${className} ${disabled ? styles.disabled : ''} ${
-                    isLoading ? styles.loading : ''
-                }`,
+                `${styles.button} ${styles[type]} ${styles[size]} ${icon && text ? styles.buttonWithIcon : ''} ${
+                    reverseItems ? styles.reverseItems : ''
+                } ${className} ${disabled ? styles.disabled : ''} ${isLoading ? styles.loading : ''}`,
             [type, size, className, disabled, text, icon, reverseItems, isLoading],
         );
         return href ? (
             <a
                 className={buttonClassName}
-                ref={forwardRef as ForwardedRef<HTMLAnchorElement>}
+                ref={ref as ForwardedRef<HTMLAnchorElement>}
                 href={href}
                 onClick={onClick}
             >
@@ -63,20 +61,20 @@ export const Button: FC<ButtonProps> = forwardRef(
                     <LoadingSpinner />
                 ) : (
                     <>
-                        {icon && icon}
-                        {text && text}
+                        {icon}
+                        {text}
                     </>
                 )}
             </a>
         ) : (
             <button
                 className={buttonClassName}
-                ref={forwardRef as ForwardedRef<HTMLButtonElement>}
+                ref={ref as ForwardedRef<HTMLButtonElement>}
                 onClick={onClick}
                 disabled={disabled}
             >
-                {icon && icon}
-                {text && text}
+                {icon}
+                {text}
             </button>
         );
     },
