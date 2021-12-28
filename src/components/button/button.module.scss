@@ -1,16 +1,24 @@
 @import '../../styles/colors.scss';
 @import '../../styles/fonts';
 
+$border-radius: 8px;
+$default-button-size: 64px;
+$medium-button-height: 40px;
+$large-button-font-size: 28px;
+$medium-button-font-size: 20px;
+$medium-button-padding: 12px 24px;
+$loading-icon-size: 60%;
+
 .button {
-	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	outline: none;
 	border: none;
+	text-decoration: none;
 	align-items: center;
 	box-sizing: border-box;
-	border-radius: 12px;
+	border-radius: $border-radius;
 	font-weight: 500;
 	cursor: pointer;
 	transition: 0.2s ease all;
@@ -39,8 +47,8 @@
 		}
 		
 		&:disabled {
-			color: white;
-			background: color(statuses, muted);
+			color: color(disabled, disabled);
+			background: color(disabled, primary);
 		}
 	}
 	
@@ -58,9 +66,9 @@
 		}
 		
 		&:disabled {
-			color: white;
-			background: color(inneres, placeholder);
-			border: 2px solid color(statuses, muted);
+			color: color(disabled, disabled);
+			background: color(disabled, content);
+			border: 2px solid color(disabled, primary);
 		}
 	}
 	
@@ -79,9 +87,9 @@
 		}
 		
 		&:disabled {
-			color: color(statuses, muted);
+			color: color(disabled, disabled);
 			background: transparent;
-			border: 1px solid color(statuses, muted);
+			border: 1px solid color(disabled, disabled);
 		}
 	}
 	
@@ -93,19 +101,36 @@
 	&.small {
 		justify-content: center;
 		align-items: center;
-		height: 64px;
-		width: 64px;
+		height: $default-button-size;
+		width: $default-button-size;
 	}
 	
 	&.medium {
-		font-size: 16px;
-		line-height: 16px;
-		padding: 12px 24px;
-		height: 40px;
+		font-size: $medium-button-font-size;
+		line-height: $medium-button-font-size;
+		padding: $medium-button-padding;
+		height: $medium-button-height;
 	}
 	
 	&.large {
-		font-size: 24px;
-		height: 64px;
+		width: 100%;
+		font-size: $large-button-font-size;
+		height: $default-button-size;
+	}
+	
+	&.large,
+	&.medium,
+	&.small {
+		position: relative;
+		
+		&.loading > svg {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			width: $loading-icon-size;
+			height: $loading-icon-size;
+		}
 	}
 }

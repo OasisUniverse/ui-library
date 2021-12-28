@@ -86,15 +86,63 @@ buttonTestMock
         disabled: true,
     })
     .set('icon-and-text', {
+        size: ButtonSizes.Large,
         icon: <InputCrossIcon />,
         text: 'some text',
         onClick: () => null,
         disabled: false,
     })
     .set('icon-and-text-reversed', {
+        size: ButtonSizes.Medium,
         icon: <InputCrossIcon />,
         text: 'some text',
         reverseItems: true,
         onClick: () => null,
         disabled: false,
+    })
+    .set('loading-small', {
+        size: ButtonSizes.Small,
+        text: 'some text1',
+        reverseItems: true,
+        href: '#',
+        isLoading: true,
+        onClick: () => null,
+        disabled: false,
+    })
+    .set('loading-large', {
+        size: ButtonSizes.Large,
+        text: 'some text1',
+        reverseItems: true,
+        href: '#',
+        isLoading: true,
+        onClick: () => null,
+        disabled: false,
+    })
+    .set('loading-medium', {
+        size: ButtonSizes.Medium,
+        text: 'some text1',
+        reverseItems: true,
+        href: '#',
+        isLoading: true,
+        onClick: () => null,
+        disabled: false,
+    })
+    .set('not-loading-link', {
+        size: ButtonSizes.Medium,
+        icon: <InputCrossIcon />,
+        text: 'some text1',
+        reverseItems: true,
+        href: '#',
+        onClick: () => null,
+        disabled: false,
+    })
+    .set('disabled-link', {
+        size: ButtonSizes.Medium,
+        type: ButtonType.Default,
+        icon: <InputCrossIcon />,
+        text: 'some text1',
+        reverseItems: true,
+        href: '#',
+        onClick: () => null,
+        disabled: true,
     });

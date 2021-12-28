@@ -17,6 +17,12 @@ $palette: (
 	),
 	inneres: (
 		placeholder: rgba(221, 221, 221, 0.7),
+	),
+	disabled: (
+		primary: #ab92ff,
+		content: #685e84,
+		accent: #4eb489,
+		disabled: #ddd,
 	)
 );
 

@@ -1,5 +1,6 @@
-import React, { FC, forwardRef, useMemo } from 'react';
+import React, { FC, ForwardedRef, forwardRef, MouseEvent, useMemo } from 'react';
 import styles from './button.module.scss';
+import LoadingSpinner from '../../shared/svg/loading-spinner.icon';
 
 export enum ButtonSizes {
     Large = 'large',
@@ -19,40 +20,61 @@ export interface ButtonProps {
     href?: string;
     size?: ButtonSizes;
     type?: ButtonType;
-    onClick: (event?: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+    onClick: (event?: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
     icon?: JSX.Element;
-    isLink?: boolean;
+    isLoading?: boolean;
     reverseItems?: boolean;
     disabled?: boolean;
 }
 
 export const Button: FC<ButtonProps> = forwardRef(
-    ({
-        className = '',
-        size = ButtonSizes.Medium,
-        type = ButtonType.Default,
-        text,
-        onClick,
-        icon,
-        href,
-        isLink = false,
-        reverseItems = false,
-        disabled = false,
-    }) => {
+    (
+        {
+            className = '',
+            size = ButtonSizes.Medium,
+            type = ButtonType.Default,
+            text,
+            onClick,
+            icon,
+            href,
+            isLoading,
+            reverseItems = false,
+            disabled = false,
+        },
+        forwardRef,
+    ) => {
         const buttonClassName = useMemo(
             () =>
                 `${styles.button} ${type ? styles[type] : ''} ${size ? styles[size] : ''} ${
                     icon && text ? styles.buttonWithIcon : ''
-                } ${reverseItems ? styles.reverseItems : ''} ${className} ${disabled ? styles.disabled : ''}`,
-            [type, size, className, disabled, text, icon, reverseItems],
+                } ${reverseItems ? styles.reverseItems : ''} ${className} ${disabled ? styles.disabled : ''} ${
+                    isLoading ? styles.loading : ''
+                }`,
+            [type, size, className, disabled, text, icon, reverseItems, isLoading],
         );
-        return isLink ? (
-            <a className={buttonClassName} href={href} onClick={onClick}>
-                {icon && icon}
-                {text && text}
+        return href ? (
+            <a
+                className={buttonClassName}
+                ref={forwardRef as ForwardedRef<HTMLAnchorElement>}
+                href={href}
+                onClick={onClick}
+            >
+                {isLoading ? (
+                    <LoadingSpinner />
+                ) : (
+                    <>
+                        {icon && icon}
+                        {text && text}
+                    </>
+                )}
             </a>
         ) : (
-            <button className={buttonClassName} onClick={onClick} disabled={disabled}>
+            <button
+                className={buttonClassName}
+                ref={forwardRef as ForwardedRef<HTMLButtonElement>}
+                onClick={onClick}
+                disabled={disabled}
+            >
                 {icon && icon}
                 {text && text}
             </button>
