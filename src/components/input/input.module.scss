@@ -182,6 +182,11 @@
 		&.error {
 			border: 2px solid color(statuses, error);
 			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			
+			&:hover {
+				border: 2px solid color(statuses, error);
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			}
 		}
 
 		&.searchWrapper {

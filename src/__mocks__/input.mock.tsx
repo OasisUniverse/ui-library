@@ -13,15 +13,15 @@ export const defaultInputProps: InputProps[] = [
         autocomplete: true,
     },
     {
-        type: InputType.PasswordInput,
-        value: '',
+        type: InputType.DefaultInput,
         onChange: (): void => {
             return;
         },
-        label: 'Label',
+        label: 'Disabled <Input />',
         labelPosition: LabelPosition.TopRight,
-        placeholder: 'Введите пароль',
+        value: 'Disabled text',
         autocomplete: true,
+        disabled: true,
     },
     {
         type: InputType.PasswordInput,
