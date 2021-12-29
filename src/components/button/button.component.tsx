@@ -50,21 +50,21 @@ export const Button: FC<ButtonProps> = forwardRef(
                 } ${className} ${disabled ? styles.disabled : ''} ${isLoading ? styles.loading : ''}`,
             [type, size, className, disabled, text, icon, reverseItems, isLoading],
         );
-        return href ? (
-            <a
-                className={buttonClassName}
-                ref={ref as ForwardedRef<HTMLAnchorElement>}
-                href={href}
-                onClick={onClick}
-            >
-                {isLoading ? (
+        const linkContent = useMemo(
+            () =>
+                isLoading ? (
                     <LoadingSpinner />
                 ) : (
                     <>
                         {icon}
                         {text}
                     </>
-                )}
+                ),
+            [isLoading, icon, text],
+        );
+        return href ? (
+            <a className={buttonClassName} ref={ref as ForwardedRef<HTMLAnchorElement>} href={href} onClick={onClick}>
+                {linkContent}
             </a>
         ) : (
             <button
