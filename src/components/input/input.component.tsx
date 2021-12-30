@@ -87,8 +87,8 @@ export const Input: FC<InputProps> = forwardRef(
             </span>
         );
 
-        const isActiveStyle = useMemo(() => value && !disabled && styles.active, [value, disabled]);
-        const isErrorStyle = useMemo(() => isError && !disabled && styles.error, [isError, disabled]);
+        const isActiveStyle = useMemo(() => (value && !disabled ? styles.active : ''), [value, disabled]);
+        const isErrorStyle = useMemo(() => (isError && !disabled ? styles.error : ''), [isError, disabled]);
         const isDisabled = useMemo(() => (disabled ? styles.disabled : ''), [disabled]);
         const isResizableStyle = useMemo(() => (isResizable ? styles.resize : ''), [isResizable]);
 

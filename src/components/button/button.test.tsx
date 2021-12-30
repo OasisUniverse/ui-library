@@ -21,7 +21,6 @@ describe('<Button /> test list', () => {
     });
     it('not disabled', () => {
         expect((button.props() as ButtonProps).disabled).toBeFalsy();
-        console.log(button.props());
     });
     it('disabled', () => {
         const button = shallow(<Button onClick={jest.fn()} {...buttonTestMock.get('default-disabled')} />);

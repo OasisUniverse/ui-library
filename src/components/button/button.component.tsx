@@ -41,7 +41,7 @@ export const Button: FC<ButtonProps> = forwardRef(
             reverseItems = false,
             disabled = false,
         },
-        forwardRef,
+        ref,
     ) => {
         const buttonClassName = useMemo(
             () =>
@@ -53,30 +53,25 @@ export const Button: FC<ButtonProps> = forwardRef(
             [type, size, className, disabled, text, icon, reverseItems, isLoading],
         );
         return href ? (
-            <a
-                className={buttonClassName}
-                ref={forwardRef as ForwardedRef<HTMLAnchorElement>}
-                href={href}
-                onClick={onClick}
-            >
+            <a className={buttonClassName} ref={ref as ForwardedRef<HTMLAnchorElement>} href={href} onClick={onClick}>
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : (
                     <>
-                        {icon && icon}
-                        {text && text}
+                        {icon}
+                        {text}
                     </>
                 )}
             </a>
         ) : (
             <button
                 className={buttonClassName}
-                ref={forwardRef as ForwardedRef<HTMLButtonElement>}
+                ref={ref as ForwardedRef<HTMLButtonElement>}
                 onClick={onClick}
                 disabled={disabled}
             >
-                {icon && icon}
-                {text && text}
+                {icon}
+                {text}
             </button>
         );
     },
