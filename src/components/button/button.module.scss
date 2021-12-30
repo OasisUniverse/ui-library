@@ -2,11 +2,12 @@
 @import '../../styles/fonts';
 
 $border-radius: 8px;
-$default-button-size: 64px;
+$small-button-size: 64px;
+$large-button-height: 64px;
 $medium-button-height: 40px;
 $large-button-font-size: 28px;
 $medium-button-font-size: 20px;
-$medium-button-padding: 12px 24px;
+$button-padding: 12px 24px;
 $loading-icon-size: 60%;
 
 .button {
@@ -101,21 +102,20 @@ $loading-icon-size: 60%;
 	&.small {
 		justify-content: center;
 		align-items: center;
-		height: $default-button-size;
-		width: $default-button-size;
+		height: $small-button-size;
+		width: $small-button-size;
 	}
 	
 	&.medium {
 		font-size: $medium-button-font-size;
-		line-height: $medium-button-font-size;
-		padding: $medium-button-padding;
+		padding: $button-padding;
 		height: $medium-button-height;
 	}
 	
 	&.large {
 		width: 100%;
 		font-size: $large-button-font-size;
-		height: $default-button-size;
+		height: $large-button-height;
 	}
 	
 	&.large,

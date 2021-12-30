@@ -31,8 +31,8 @@ const presentationStyle = {
 
 export const Presentation = (): JSX.Element => (
     <div style={presentationStyle}>
-        {Array.from(buttonTestMock, ([key, props]) => (
-            <Button key={key} {...props} />
+        {Array.from(buttonTestMock, ([, props]) => (
+            <Button {...props} />
         ))}
     </div>
 );
