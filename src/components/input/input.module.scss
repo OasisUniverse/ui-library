@@ -50,15 +50,17 @@
 		transition: 0.2s ease-in-out;
 		transition-property: color, background, border, box-shadow;
 		
+		&.active,
+		&.error,
+		&.disabled {
+			background: color(background, main);
+		}
+		
 		&.active {
 			background: color(background, main);
 			border: 2px solid color(accent, dark);
 			box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
 			color: white;
-			
-			&::placeholder {
-				color: white;
-			}
 		}
 		
 		&.error {
@@ -107,6 +109,18 @@
 			border: 2px solid color(accent, dark);
 			background-color: color(background, content);
 			box-shadow: inset 0 0 10px color(accent, dark);
+			
+			&.active {
+				border: 2px solid color(accent, dark);
+				box-shadow: 0 0 15px color(accent, dark), inset 0 0 10px color(accent, dark);
+				background: color(background, main);
+			}
+			
+			&.error {
+				border: 2px solid color(statuses, error);
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+				background: color(background, main);
+			}
 		}
 		
 		&:disabled {
@@ -125,12 +139,6 @@
 		
 		&.passwordInput {
 			padding: 0 12px 0 24px;
-		}
-		
-		&.active,
-		&.error,
-		&.disabled {
-			background: color(background, main);
 		}
 		
 		.passwordDisplayButton {
@@ -182,6 +190,11 @@
 		&.error {
 			border: 2px solid color(statuses, error);
 			box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			
+			&:hover {
+				border: 2px solid color(statuses, error);
+				box-shadow: 0 0 15px color(statuses, error), inset 0 0 10px color(statuses, error);
+			}
 		}
 
 		&.searchWrapper {

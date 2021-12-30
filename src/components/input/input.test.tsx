@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, InputProps, InputType } from './input.component';
+import { Input, InputProps } from './input.component';
 import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { inputTestMockMap } from '../../__mocks__/input.test.mock';
@@ -11,28 +11,18 @@ const defaultInputProps: InputProps = {
 };
 
 let defaultInput: ShallowWrapper;
-let passwordInput: ShallowWrapper;
-let searchInput: ShallowWrapper;
-let textArea: ShallowWrapper;
 
 describe('<Input /> test list', () => {
     beforeAll(() => {
         defaultInput = shallow(<Input {...defaultInputProps} />);
-        passwordInput = shallow(<Input {...defaultInputProps} type={InputType.PasswordInput} />);
-        searchInput = shallow(<Input {...defaultInputProps} type={InputType.SearchInput} />);
-        textArea = shallow(<Input {...defaultInputProps} type={InputType.TextArea} />);
+        jest.clearAllMocks();
     });
-    afterAll(() => {
-        defaultInput = shallow(<Input {...defaultInputProps} />);
-        passwordInput = shallow(<Input {...defaultInputProps} type={InputType.PasswordInput} />);
-        searchInput = shallow(<Input {...defaultInputProps} type={InputType.SearchInput} />);
-        textArea = shallow(<Input {...defaultInputProps} type={InputType.TextArea} />);
-    });
-    it('render', () => {
-        expect(defaultInput.exists()).toBeTruthy();
-        expect(passwordInput.exists()).toBeTruthy();
-        expect(searchInput.exists()).toBeTruthy();
-        expect(textArea.exists()).toBeTruthy();
+    it('render all list', () => {
+        Array.from(inputTestMockMap, ([key, props]) => {
+            const component = shallow(<Input key={key} {...props} />);
+            expect(component.exists()).toBeTruthy();
+            expect(component).toMatchSnapshot();
+        });
     });
     it('should return value via onChange', () => {
         const input = defaultInput.find('.inputWrapper').childAt(0);
