@@ -1,0 +1,136 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts';
+
+$border-radius: 8px;
+$small-button-size: 64px;
+$large-button-height: 64px;
+$medium-button-height: 40px;
+$large-button-font-size: 28px;
+$medium-button-font-size: 20px;
+$button-padding: 12px 24px;
+$loading-icon-size: 60%;
+
+.button {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	align-items: center;
+	box-sizing: border-box;
+	border-radius: $border-radius;
+	font-weight: 500;
+	cursor: pointer;
+	transition: 0.2s ease all;
+	font-family: Inter, sans-serif;
+	user-select: none;
+	
+	&.buttonWithIcon {
+		justify-content: space-around;
+	}
+	
+	&.reverseItems {
+		flex-direction: row-reverse;
+	}
+	
+	&.default {
+		color: white;
+		background: color(primary, dark);
+		
+		&:hover {
+			box-shadow: 0 0 15px color(primary, dark);
+		}
+		
+		&:active {
+			box-shadow: 0 0 15px color(primary, dark);
+			background: color(background, content);
+		}
+		
+		&:disabled {
+			color: color(disabled, disabled);
+			background: color(disabled, primary);
+		}
+	}
+	
+	&.secondary {
+		color: white;
+		background: color(background, content);
+		border: 2px solid color(primary, dark);
+		
+		&:hover {
+			box-shadow: 0 0 15px color(primary, dark);
+		}
+		
+		&:active {
+			box-shadow: inset 0 0 15px color(background, main), 0 0 10px color(primary, dark);
+		}
+		
+		&:disabled {
+			color: color(disabled, disabled);
+			background: color(disabled, content);
+			border: 2px solid color(disabled, primary);
+		}
+	}
+	
+	&.outlined {
+		color: color(accent, dark);
+		background: transparent;
+		border: 1px solid color(accent, dark);
+		
+		&:hover {
+			box-shadow: 0 0 15px color(accent, dark);
+		}
+		
+		&:active {
+			background: color(accent, dark);
+			color: white;
+		}
+		
+		&:disabled {
+			color: color(disabled, disabled);
+			background: transparent;
+			border: 1px solid color(disabled, disabled);
+		}
+	}
+	
+	&.disabled:hover {
+		box-shadow: none;
+		cursor: not-allowed;
+	}
+	
+	&.small {
+		justify-content: center;
+		align-items: center;
+		height: $small-button-size;
+		width: $small-button-size;
+	}
+	
+	&.medium {
+		font-size: $medium-button-font-size;
+		padding: $button-padding;
+		height: $medium-button-height;
+	}
+	
+	&.large {
+		width: 100%;
+		font-size: $large-button-font-size;
+		height: $large-button-height;
+	}
+	
+	&.large,
+	&.medium,
+	&.small {
+		position: relative;
+		
+		&.loading > svg {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			width: $loading-icon-size;
+			height: $loading-icon-size;
+		}
+	}
+}

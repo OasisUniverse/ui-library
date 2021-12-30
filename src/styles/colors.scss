@@ -13,10 +13,16 @@ $palette: (
 	),
 	statuses: (
 		error: #ac1818,
-		muted: #8c8c8c,
+		muted: #5e5e5e,
 	),
 	inneres: (
 		placeholder: rgba(221, 221, 221, 0.7),
+	),
+	disabled: (
+		primary: #ab92ff,
+		content: #685e84,
+		accent: #4eb489,
+		disabled: #ddd,
 	)
 );
 
